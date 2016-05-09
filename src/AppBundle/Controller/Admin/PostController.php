@@ -55,6 +55,7 @@ class PostController extends BaseController
      *     could move this annotation to any other controller while maintaining
      *     the route name and therefore, without breaking any existing link.
      *
+     * @Route("/", name="admin_index")
      * @Route("/{type}/category", name="admin_post_category_index")
      * @Method("GET")
      */
@@ -320,7 +321,7 @@ class PostController extends BaseController
      * Deletes a Post entity.
      *
      * @Route("/delete/{id}", name="admin_post_delete")
-     * @Method("DELETE")
+     * @@@@Method("DELETE")
      * @@@@Security("post.isAuthor(user)")
      *
      * The Security annotation value is an expression (if it evaluates to false,

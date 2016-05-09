@@ -30,7 +30,7 @@ use AppBundle\Utils\ConstantBundle;
  * existing bundles that let you generate ready-to-use backends without effort.
  * See http://knpbundles.com/keyword/admin
  *
- * @Route("/admin/banner")
+ * @Route("/admin")
  * @Security("has_role('ROLE_ADMIN')")
  *
  * @author Ryan Weaver <weaverryan@gmail.com>
@@ -49,8 +49,8 @@ class BannerController extends BaseController
      *     to create simpler links in the templates. Moreover, in the future we
      *     could move this annotation to any other controller while maintaining
      *     the route name and therefore, without breaking any existing link.
-     *
-     * @Route("/", name="admin_banner_index")
+     * @Route("")
+     * @Route("/banner", name="admin_banner_index")
      * @Method("GET")
      */
     public function indexAction()

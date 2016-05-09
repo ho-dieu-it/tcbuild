@@ -3,9 +3,9 @@ parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: 3306
-    database_name: tamcongb_db
-    database_user: tamcongb_db
-    database_password: @@tamcong#
+    database_name: lamsanph_db
+    database_user: root
+    database_password: admin
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
