@@ -1,0 +1,30 @@
+/*border
+    ex: .bordered(#EEE, #E5E5E5, #DDD, #E5E5E5);
+        .border-radius();.border-radius(10px);
+        .border-radiuses(1px;2px;3px;4px);
+*/
+/*drop-shadow
+    ex: .drop-shadow(0, 1px, 2px, 0.2);
+*/
+/*opacity
+    ex: .opacity(0.8); Sets the opacity. 0 is fully transparent, 1 is opaque.
+*/
+/*transition
+    ex: .transition-duration(0.2s); //quá trình chuyển đổi mất bao lâu thời gian
+        .transition(2s,ease-in);
+*/
+/*transform
+    ex: .rotation(10deg); góc quay
+        .scale(1.2); tỉ lệ phóng to,thu nhỏ so với ban đầu
+*/
+/*box
+    ex: .inner-shadow(0, 1px, 2px, 0.4); The first two numbers are the x and y coordinates, the third is the blur and the last one is the strength of the shadow
+        .box-shadow(0 1px 2px #999)    
+*/
+/*user select
+    ex: .user-select();chống copy
+*/
+/*animate
+    ex: .animation(bounceInLeft,300ms,0,ease);
+*/
+/*position*/

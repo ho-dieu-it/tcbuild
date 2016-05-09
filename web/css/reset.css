@@ -1,0 +1,24 @@
+a,
+a:active,
+a:focus,
+a:hover,
+h5,
+h5:hover {
+  outline: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+ol,
+ul {
+  margin: 0;
+}

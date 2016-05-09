@@ -1,0 +1,111 @@
+@charset "utf-8";
+/*border
+    ex: .bordered(#EEE, #E5E5E5, #DDD, #E5E5E5);
+        .border-radius();.border-radius(10px);
+        .border-radiuses(1px;2px;3px;4px);
+*/
+/*drop-shadow
+    ex: .drop-shadow(0, 1px, 2px, 0.2);
+*/
+/*opacity
+    ex: .opacity(0.8); Sets the opacity. 0 is fully transparent, 1 is opaque.
+*/
+/*transition
+    ex: .transition-duration(0.2s); //quá trình chuyển đổi mất bao lâu thời gian
+        .transition(2s,ease-in);
+*/
+/*transform
+    ex: .rotation(10deg); góc quay
+        .scale(1.2); tỉ lệ phóng to,thu nhỏ so với ban đầu
+*/
+/*box
+    ex: .inner-shadow(0, 1px, 2px, 0.4); The first two numbers are the x and y coordinates, the third is the blur and the last one is the strength of the shadow
+        .box-shadow(0 1px 2px #999)    
+*/
+/*user select
+    ex: .user-select();chống copy
+*/
+/*animate
+    ex: .animation(bounceInLeft,300ms,0,ease);
+*/
+/*position*/
+@font-face {
+  font-family: UVNMuaThu;
+  src: url(font/UVNMuaThu.ttf);
+}
+@font-face {
+  font-family: Bambola;
+  src: url(font/iCielBambola.ttf);
+}
+@font-face {
+  font-family: iCBambola;
+  src: url(font/iCielBambola.otf);
+}
+@font-face {
+  font-family: Roboto;
+  src: url(font/Roboto-Regular.ttf);
+}
+@font-face {
+  font-family: Open san;
+  src: url(font/OpenSans-Regular.ttf);
+}
+@font-face {
+  font-family: UVNBaiSau;
+  src: url(font/UVNBaiSau.ttf);
+}
+@font-face {
+  font-family: UVNBaiSauR;
+  src: url(font/UVNBaiSau_R.ttf);
+}
+@font-face {
+  font-family: Cour;
+  src: url(font/cour.ttf);
+}
+@font-face {
+  font-family: Courbd;
+  src: url(font/courbd.ttf);
+}
+@font-face {
+  font-family: Couri;
+  src: url(font/couri.ttf);
+}
+@font-face {
+  font-family: Courbi;
+  src: url(font/courbi.ttf);
+}
+@font-face {
+  font-family: VUNIVER;
+  src: url(font/VUNIVER.TTF);
+}
+@font-face {
+  font-family: Avantg;
+  src: url(font/avantg.ttf);
+}
+@font-face {
+  font-family: VTNfap;
+  src: url(font/Vntfap01.ttf);
+}
+@font-face {
+  font-family: VNIthufap;
+  src: url(font/vnithufap.ttf);
+}
+@font-face {
+  font-family: UVNHuongQue;
+  src: url(font/UVNHuongQue_R.TTF);
+}
+@font-face {
+  font-family: HL-thufap;
+  src: url(font/HL-thufap1-Unicode.ttf);
+}
+.border-right {
+  border: 1px solid #dddddd;
+}
+.no-padding {
+  padding: 0 !important;
+}
+.docs {
+  margin: 0 0 10px;
+}
+.txt-success {
+  color: #ec262c;
+}
