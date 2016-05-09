@@ -1,0 +1,61 @@
+{% extends 'layout.html.twig' %}
+{% block navigation %}{% endblock %}
+{% block main %}
+<!-- start contact content -->
+<div class="col-md-12">
+    <div class="contact-content clearfix">
+        <h1 class="title">
+            <span>
+                Thông tin liên hệ
+            </span>
+        </h1>
+        {% set image = 'no_image.png' %}
+        {% if contact.files is defined and (contact.files|first) %}
+            {% set image = (contact.files|first).path %}
+        {% endif %}
+        <div class="contact-block clearfix">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="#">
+                        <img class="img-responsive" src="{{ asset('uploads/pages/') }}{{ image }}" />
+                    </a>
+                </div>
+                <div class="col-md-9">
+                {{ contact.content|md2html }}
+                </div>
+            </div>
+            <hr class="" />
+            <h3 class="title">gởi thông tin liên hệ</h3>
+            <div class="description">
+                Xin vui lòng điền các yêu cầu vào form dưới đây và gửi cho chúng tôi. Chúng tôi
+                sẽ trả lời bạn ngay sau khi nhận được. Xin chân thành cảm ơn!
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class=" contact-feedback">
+                        {{ include('contact/_form.html.twig') }}
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="map clearfix">
+                        <div class="map-canvas" id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+function initMap() {
+    var mapDiv = document.getElementById('map');
+    var map = new google.maps.Map(mapDiv, {
+        center: {lat: 10.839741, lng: 106.653140},
+        mapTypeControl: true,
+        zoom: 17
+    });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+            async defer></script>
+{% endblock %}

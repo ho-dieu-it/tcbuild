@@ -1,0 +1,41 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_category_show' %}
+
+{% block main %}
+    <h1>{{ category.name }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'label.summary'|trans }}</th>
+                <td>{{ category.name|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.author'|trans }}</th>
+                <td><p>{{ category.authorEmail }}</p></td>
+            </tr>
+            <tr>
+                <th>{{ 'label.published_at'|trans }}</th>
+                <td><p>{{ category.createdAt|localizeddate('long', 'medium') }}</p></td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_category_edit', { id: category.id }) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-edit"></i> {{ 'action.category.edit'|trans }}
+        </a>
+    </div>
+
+    <div class="section">
+        {{ include('admin/category/_form.html.twig', {
+            form: delete_form,
+            button_label: 'action.category.delete'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'layout.html.twig' %}
+{% block navigation %}{{ parent() }}{% endblock %}
+
+{% block main %}
+<div class="col-md-9">
+    <div class="news-content">
+        <h1 class="title"><span>Tin tức</span></h1>
+        <div class="news-block clearfix">
+        {% for news_item in news %}
+            {% set image = 'no_image.png' %}
+            {% if news_item.images is defined and (news_item.images|first) %}
+                {% set image = (news_item.images|first).name %}
+            {% endif %}
+            {% set url =  path('news_show', { slug: news_item.slug }) %}
+            <div class="news-item clearfix">
+                <div class="col-md-3 col-sm-4 col-xs-12 image">
+                    <a href="{{ url }}">
+                        <img src="{{ asset('uploads/news/') }}{{ image }}" class="img-responsive" />
+                    </a>
+                </div>
+                <div class="col-md-9 col-sm-8 col-xs-12 news-info ">
+                    <h2 class="name"><a href="{{ url }}">
+                           {{ news_item.title }}</a></h2>
+                    <div class="date">{{ news_item.publishedAt|localizeddate('medium', 'short')}}</div>
+                    <div class="desc">
+                        {{ news_item.summary|md2html }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% if pagenums > 1 %}
+        <div class="navigation">
+            <ul class="pagination">
+                <li>
+                    <a aria-label="Previous" href="#">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+                {% for num in 1..pagenums %}
+                    {% if num == page %}
+                        <li class="active"><a href="#">{{ num }}</a></li>
+                    {% else %}
+                        <li><a href="{{  path('news', {pageNum: num}) }}">
+                                {{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                <li>
+                    <a aria-label="Next" href="#">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+        {% if pagenums > 1 %}
+            <div class="navigation">
+                <ul class="pagination">
+                    <li>
+                        <a aria-label="Previous" href="#">
+                            <span aria-hidden="true">«</span>
+                        </a>
+                    </li>
+                    {% for num in 1..pagenums %}
+                        {% if num == page %}
+                            <li class="active"><a href="#">{{ num }}</a></li>
+                        {% else %}
+                            <li><a href="{{  path('news', {pageNum: num}) }}">
+                                    {{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    <li>
+                        <a aria-label="Next" href="#">
+                            <span aria-hidden="true">»</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<!-- end news content -->
+{% endblock %}

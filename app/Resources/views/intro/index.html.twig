@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+{% block navigation %}{% endblock %}
+{% block menu_intro %}
+    <!-- start left news -->
+<div class="col-md-3">
+    <div class="menu-about">
+        <h3 class="title clearfix">
+            <span>
+                Giới thiệu
+            </span>
+        </h3>
+        <ul>
+            <li>
+                <a href="{{ path('intro_index',{slug:'ve-chung-toi'}) }}">
+                    Về chúng tôi</a>
+            </li>
+            <li>
+                <a href="{{ path('intro_index',{slug:'lich-su-hinh-thanh'}) }}">
+                    Lịch sử hình thành
+            </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+<div class="col-md-9">
+    <div class="about-detail">
+        <h1 class="title"><span>{{ default_intro.title }}</span></h1>
+        <div class="about-block">
+            {#<h1>{{ default_intro.summary |md2html }}</h1>#}
+            <div class="content">
+                {{ default_intro.content |md2html }}
+            </div>
+            <div class="social-group">
+            </div>
+        </div>
+
+</div>
+</div>
+{% endblock %}

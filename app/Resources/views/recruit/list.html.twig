@@ -1,0 +1,109 @@
+{% extends 'layout.html.twig' %}
+{% block navigation %}{% endblock %}
+{% block main %}
+<div class="col-md-3">
+    <div class="menu-about">
+        <h3 class="title clearfix">
+            <span>Tuyển dụng</span>
+        </h3>
+        <ul>
+            {% for category in categories %}
+            <li><a href="{{ path('recruit_list', {slug:category.slug, pageNum:1}) }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="col-md-9">
+    <section class="project-content clearfix">
+        <h1 class="title clearfix">
+            <span>{{ category.name }}</span>
+        </h1>
+        <div class="project-block project-list clearfix">
+            <div class="row">
+                {% for post in posts %}
+                <div class="project-resize project-item-box clearfix">
+                    <div class="project-item clearfix">
+                        {% set url =  path('recruit_show', { slug: post.slug }) %}
+
+                        <div class="col-md-9 col-xs-12 col-sm-8">
+                            <div class="right-block">
+                                <h2 class="name">
+                                    <a href="{{ url }}">{{ post.title }}</a>
+                                </h2>
+                                <div class="description">{{ post.summary }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if pagenums > 1 %}
+            {% if app.request.get('_route') == 'recruit_index' %}
+                {% set current_route =  path('recruit_index', { pageNum: 1}) %}
+            {% else %}
+                {% set current_route = path('recruit_list', { slug: category.slug, pageNum: 1}) %}
+            {% endif %}
+        <div class="navigation">
+            <ul class="pagination">
+                <li>
+                    <a href="{{ current_route }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% if( pagenums > 5 and page > 3 ) %}
+                    {% set start =  page + 2 > pagenums? page - 4 : page - 2 %}
+                    {% set end = page + 2 > pagenums ? pagenums : page + 2 %}
+                {% else %}
+                    {% set start = 1 %}
+                    {% set end = pagenums < 5 ? pagenums : 5 %}
+                {% endif %}
+                {% for num in start..end %}
+                    {% if app.request.get('_route') == 'recruit_index' %}
+                        {% set current_route =  path('recruit_index', { pageNum: num}) %}
+                    {% else %}
+                        {% set current_route = path('recruit_list', { slug: category.slug, pageNum: num}) %}
+                    {% endif %}
+                {% if num == page %}
+                    <li class="active"><a href="#">{{ num }}</a></li>
+                {% else %}
+                    <li>
+                        <a href="{{  current_route }}">
+                            {{ num }}</a>
+                    </li>
+                {% endif %}
+                {% endfor %}
+                <li>
+                    <a href="{{  current_route }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var owl = $("#small-image");
+        owl.owlCarousel({
+            autoPlay: true,
+            autoPlay: 5000,
+            items: 4,
+            slideSpeed: 1000,
+            pagination: false,
+            itemsDesktop: [1200, 4],
+            itemsDesktopSmall: [980, 4],
+            itemsTablet: [767, 4],
+            itemsMobile: [480, 3]
+        });
+        $(".small-image-content .nextlogo").click(function () {
+            owl.trigger('owl.next');
+        });
+        $(".small-image-content .prevlogo").click(function () {
+            owl.trigger('owl.prev');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_category_index' %}
+
+{% block main %}
+    <div class="box">
+        <div class="box-header">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{{ 'label.category.name'|trans }}</th>
+                    <th><i class="fa fa-user"></i> {{ 'label.author'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td><span style="padding-left:{{ category.lvl*5 }}px;" ></span>{{ category.name }}</td>
+                        <td>{{ category.authorEmail }}</td>
+                        <td>
+                            <div class="item-actions">
+                                <a href="{{ path('admin_category_show', { id: category.id }) }}" class="btn btn-sm btn-default">
+                                    {{ 'action.show'|trans }}
+                                </a>
+                                <a href="{{ path('admin_category_edit', { id: category.id }) }}" class="btn btn-sm btn-default">
+                                    {{ 'action.edit'|trans }}
+                                </a>
+
+                                {#{% if category.isAuthor(app.user) %}#}
+                                    {#<a href="{{ path('admin_category_edit', { id: category.id }) }}" class="btn btn-sm btn-primary">#}
+                                        {#<i class="fa fa-edit"></i> {{ 'action.edit'|trans }}#}
+                                    {#</a>#}
+                                {#{% endif %}#}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{{ 'label.category.name'|trans }}</th>
+                    <th><i class="fa fa-user"></i> {{ 'label.author'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        <a href="{{ path('admin_category_new') }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus"></i> {{ 'action.category.create'|trans }}
+        </a>
+    </div>
+
+ {#   {{ parent() }}
+
+    {{ show_source_code(_self) }}#}
+{% endblock %}

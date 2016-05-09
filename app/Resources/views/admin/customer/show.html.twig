@@ -1,0 +1,48 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_customer_show' %}
+
+{% block main %}
+    <h3>{{ customer.name }}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'label.customer.address'|trans }}</th>
+                <td>{{ customer.address|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.customer.email'|trans }}</th>
+                <td>{{ customer.email|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.customer.uploadLogo'|trans }}</th>
+                <td>{{ customer.logo|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.customer.createdAt'|trans }}</th>
+                <td><p>{{ customer.createdAt|localizeddate('long', 'medium') }}</p></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('admin_customer_index') }}"> {{ 'action.customer.back_to_list'|trans }}
+    </a>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_customer_edit', { id: customer.id }) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-edit"></i> {{ 'action.customer.edit'|trans }}
+        </a>
+    </div>
+        <div class="section">
+            {{ include('admin/customer/_form.html.twig', {
+                form: delete_form,
+                button_label: 'action.customer.delete'|trans,
+                button_css: 'btn btn-lg btn-block btn-danger',
+                include_back_to_home_link: false
+            }, with_context = false) }}
+        </div>
+
+
+{% endblock %}

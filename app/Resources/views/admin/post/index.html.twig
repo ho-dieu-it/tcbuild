@@ -1,0 +1,65 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_post_index' %}
+
+{% block main %}
+    <div class="box">
+        <div class="box-header">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{{ 'label.post.title'|trans }}</th>
+                    <th>{{ 'label.post.slug'|trans }}</th>
+                    <th>{{ 'label.post.summary'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.slug }}</td>
+                        <td>{{ post.summary }}</td>
+                        <td>
+                            <div class="item-actions">
+                                <a href="{{ path('admin_post_show', { id: post.id }) }}" class="btn btn-sm btn-default">
+                                    {{ 'action.show'|trans }}
+                                </a>
+
+                                {% if post.isAuthor(app.user) %}
+                                    <a href="{{ path('admin_post_edit', { id: post.id }) }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{{ 'label.post.title'|trans }}</th>
+                    <th>{{ 'label.post.slug'|trans }}</th>
+                    <th>{{ 'label.post.summary'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </tfoot>
+            </table>
+            <a href="{{ path('admin_post_category_index', {type: type.code}) }}" class="btn btn-link">
+                {{ 'action.menu.back_to_list'|trans }}
+            </a>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        <a href="{{ path('admin_post_new', {id : category.id}) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus"></i> {{ 'action.post.create'|trans }}
+        </a>
+    </div>
+
+ {#   {{ parent() }}
+
+    {{ show_source_code(_self) }}#}
+{% endblock %}

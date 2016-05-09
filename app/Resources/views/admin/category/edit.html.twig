@@ -1,0 +1,25 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_category_edit' %}
+
+{% block main %}
+    <h1>{{ 'title.category.edit'|trans({'%id%': category.id}) }}</h1>
+
+    {{ include('admin/category/_form.html.twig', {
+        form: edit_form,
+        button_label: 'action.category.save'|trans,
+    }, with_context = false) }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        {{ include('admin/category/_form.html.twig', {
+            form: delete_form,
+            button_label: 'action.category.delete'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+
+    {{ parent() }}
+{% endblock %}

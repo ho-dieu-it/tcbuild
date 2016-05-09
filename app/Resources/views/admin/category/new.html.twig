@@ -1,0 +1,14 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_category_new' %}
+
+{% block main %}
+    <h1>{{ 'title.category.add'|trans }}</h1>
+
+
+    {{ include('admin/category/_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

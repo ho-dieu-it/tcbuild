@@ -1,0 +1,46 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_page_show' %}
+
+{% block main %}
+    <h1>{{ data.title }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'label.page.summary'|trans }}</th>
+                <td>{{ data.title|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.page.content'|trans }}</th>
+                <td>{{ data.slug|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.page.published_at'|trans }}</th>
+                <td><p>{{ data.createdAt|localizeddate('long', 'medium') }}</p></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <a href="{{ path('admin_field_category_index') }}" class="btn btn-link">
+        {{ 'action.menu.back_to_list'|trans }}
+    </a>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_field_category_edit', { id: data.id }) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-edit"></i> {{ 'action.field.edit'|trans }}
+        </a>
+    </div>
+
+    <div class="section">
+        {{ include('admin/field/category/_form.html.twig', {
+            form: delete_form,
+            button_label: 'action.page.delete'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+
+{% endblock %}

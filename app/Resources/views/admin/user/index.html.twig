@@ -1,0 +1,61 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_post_index' %}
+
+{% block main %}
+    <div class="box">
+        <div class="box-header">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{{ 'label.user.username'|trans }}</th>
+                    {#<th>{{ 'label.user.birthday'|trans }}</th>#}
+                    <th>{{ 'label.user.email'|trans }}</th>
+                    <th>{{ 'label.user.role'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        {#<td>{{ user.birthday }}</td>#}
+                        <td>{{ user.email}}</td>
+                        <td>{{ user.roles|first}}</td>
+                        <td>
+                            <div class="item-actions">
+                                <a href="{{ path('admin_user_show', { id: user.id }) }}" class="btn btn-sm btn-default">
+                                    {{ 'action.show'|trans }}
+                                </a>
+
+                                {#{% if product.isAuthor(app.user) %}#}
+                                    <a href="{{ path('admin_user_edit', { id: user.id }) }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
+                                    </a>
+                                {#{% endif %}#}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{{ 'label.user.username'|trans }}</th>
+                    {#<th>{{ 'label.user.birthday'|trans }}</th>#}
+                    <th>{{ 'label.user.email'|trans }}</th>
+                    <th>{{ 'label.user.role'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        <a href="{{ path('admin_user_new') }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus"></i> {{ 'action.user.create'|trans }}
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_post_show' %}
+
+{% block main %}
+    <h1>{{ post.title }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'label.post.summary'|trans }}</th>
+                <td>{{ post.summary|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.post.content'|trans }}</th>
+                <td>{{ post.content|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.post.published_at'|trans }}</th>
+                <td><p>{{ post.publishedAt|localizeddate('long', 'medium') }}</p></td>
+            </tr>
+        </tbody>
+    </table>
+    {% if include_back_to_home_link is not defined or include_back_to_home_link == true %}
+        <a href="{{ path('admin_post_list', {id: category.id}) }}" class="btn btn-link">
+            {{ 'action.post.back_to_list'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_post_edit', { id: post.id }) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-edit"></i> {{ 'action.post.edit'|trans }}
+        </a>
+    </div>
+
+    <div class="section">
+        {{ include('admin/post/_form.html.twig', {
+            form: delete_form,
+            button_label: 'action.post.delete'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+{% endblock %}

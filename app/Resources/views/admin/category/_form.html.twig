@@ -1,0 +1,28 @@
+{#
+    By default, forms enable client-side validation. This means that you can't
+    test the server-side validation errors from the browser. To temporarily
+    disable this validation, add the 'novalidate' attribute:
+
+    {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
+#}
+
+{{ form_start(form) }}
+    {#{{ form_label(form.name, 'label.category.name'| trans) }}#}
+    {#{{ form_row(form.name) }}#}
+
+    {#{{ form_label(form.slug, 'label.category.slug'| trans) }}#}
+    {#{{ form_row(form.slug) }}#}
+
+    {#{{ form_label(form.parent, 'label.category.parent'| trans) }}#}
+    {#{{ form_row(form.parent, { 'empty_value': '=====' }) }}#}
+
+    <input type="submit" value="{{ button_label|default('button.category.create'|trans) }}"
+           class="{{ button_css|default("btn btn-primary") }}" />
+
+    {% if include_back_to_home_link is not defined or include_back_to_home_link == true %}
+        <a href="{{ path('admin_category_index') }}" class="btn btn-link">
+            {{ 'link.category.backlist'|trans }}
+        </a>
+    {% endif %}
+{{ form_end(form) }}
+

@@ -1,0 +1,26 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_menu_new' %}
+
+{% block main %}
+    <h1>Thêm {{ type.name |trans |lower }}</h1>
+
+    {{ include('admin/post/category/_form.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('app_menu[description]');
+
+    });
+</script>
+
+{% endblock %}

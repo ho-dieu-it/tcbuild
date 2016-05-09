@@ -1,0 +1,62 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_category_field_index' %}
+
+{% block main %}
+    <div class="box">
+        <div class="box-header">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{{ 'label.field.title'|trans }}</th>
+                    <th>{{ 'label.field.slug'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for menu in menus %}
+                    <tr>
+                        <td>{{ menu.title }}</td>
+                        <td>{{ menu.slug }}</td>
+                        <td>
+                            <div class="item-actions">
+                                <a href="{{ path('admin_field_category_show', { id: menu.id }) }}" class="btn btn-sm btn-default">
+                                    {{ 'action.show'|trans }}
+                                </a>
+
+                                {% if menu.isAuthor(app.user) %}
+                                    <a href="{{ path('admin_field_category_edit', { id: menu.id }) }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
+                                    </a>
+                                {% endif %}
+                                <a href="{{ path('admin_field_list', { id: menu.id }) }}" class="btn btn-sm btn-default">
+                                    {{ 'action.menu.show'|trans }}
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{{ 'label.field.title'|trans }}</th>
+                    <th>{{ 'label.field.slug'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        <a href="{{ path('admin_field_category_new') }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus"></i> {{ 'action.menu.create'|trans }}
+        </a>
+    </div>
+
+ {#   {{ parent() }}
+
+    {{ show_source_code(_self) }}#}
+{% endblock %}

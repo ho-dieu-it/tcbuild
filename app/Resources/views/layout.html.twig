@@ -1,0 +1,231 @@
+{#
+   This is the base template used as the application layout which contains the
+   common elements and decorates all the other templates.
+   See http://symfony.com/doc/current/book/templating.html#template-inheritance-and-layouts
+#}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Tam Cong Building{% endblock %}</title>
+
+        {% block stylesheets %}
+            <!-- bootstrap -->
+            <link rel="stylesheet" href="{{ asset('js/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="screen" />
+            <!-- font awesome -->
+            <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}" type="text/css" media="screen" />
+            <!-- main css -->
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css')}}" />
+            <!-- responsive css -->
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css')}}" />
+            <!-- owl-carousel css  -->
+            <link href="{{ asset('js/owl-carousel/owl.carousel.css')}}" rel="stylesheet" />
+            <link href="{{ asset('js/owl-carousel/owl.theme.css')}}" rel="stylesheet" />
+            <!--flexslider css-->
+            <link href="{{ asset('js/FlexSlider/flexslider.css')}}" rel="stylesheet" />
+            <!-- Jquery -->
+            <script type="text/javascript" src="{{ asset('js/jQuery/jquery-2.1.0.min.js')}}"></script>
+            <!-- bootstrap -->
+            <script type="text/javascript" src="{{ asset('js/bootstrap/js/bootstrap.js')}}"></script>
+            <!-- wow.js - animate -->
+            <script src="{{ asset('js/animate/wow.js')}}"></script>
+            <!-- fixheightproduct js  -->
+            <!-- owl-carousel js  -->
+            <script type="text/javascript" src="{{ asset('js/owl-carousel/owl.carousel.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('js/owl-carousel/setting.js')}}"></script>
+
+            <!--flexslider-->
+            <script type="text/javascript" src="{{ asset('js/FlexSlider/jquery.flexslider-min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('js/common/base.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('js/common/common.js')}}"></script>
+
+        {% endblock %}
+        {#<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2" />#}
+    </head>
+    <body id="{% block body_id %}{% endblock %}">
+        <!-- start wrapper -->
+        <div class="wrapper">
+
+            <!-- header -->
+            <header class="header">
+                <!--container-->
+                <div class="">
+                    <!-- header content -->
+                    <section class="header-content clearfix">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3 col-xs-12 col-sm-12 header-left">
+                                    <div class="logo clearfix">
+                                        <a href="/" title="">
+                                            <img alt="" src="{{ asset('uploads/layout/logo.png')}}" class="img-responsive" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 navigation-menu clearfix">
+                                    <div class="hotline">
+                                        (08) - 6298 - 25555
+                                    </div>
+                                    <div class="menu-top">
+                                        <nav class="navbar nav-menu">
+                                            <div class="navbar-header">
+                                                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                                <a class="navbar-brand hidden-md hidden-lg hidden-sm" href="Index.html">Menu</a>
+                                            </div>
+                                            <nav id="mobile-menu" class="mobile-menu collapse navbar-collapse">
+                                                <ul class="menu nav navbar-nav">
+                                                    <li {{ ( app.request.get("_route") == "homepage" or app.request.get("_route") == "" )  ? "class=active" : "" }}>
+                                                        <a href="{{ url('homepage') }}"><span><i class="fa fa-home"></i>Trang chủ</span></a>
+                                                    </li>
+                                                    <li {{ app.request.get("_route") == "intro_index" ? "class=active" : "" }}>
+                                                        <a href="{{ path('intro_index',{slug:'ve-chung-toi'}) }}" class=""><span>Giới thiệu</span></a></li>
+                                                    <li {{ app.request.get("_route") == "field_index" ? "class=active" : "" }}>
+                                                        <a href="{{ path('field_index') }}" class=""><span>Lĩnh vực hoạt động</span></a></li>
+
+                                                    <li {{ app.request.get("_route") == "project_index" ? "class=active" : "" }}>
+                                                        <a href="{{ path('project_index',{ pageNum:1 }) }}" class=""><span>Dự án</span></a>
+                                                    </li>
+                                                    <li {{ app.request.get("_route") == "news_index" ? "class=active" : "" }}>
+                                                        <a href="{{ path('news_index',{ pageNum:1 }) }}" class=""><span>Tin tức</span></a></li>
+                                                    <li {{ app.request.get("_route") == "recruit_index" ? "class=active" : "" }}>
+                                                        <a href="{{ path('recruit_index',{ pageNum:1 }) }}" class=""><span>Tuyển dụng</span></a></li>
+                                                    <li {{ app.request.get("_route") == "contact_index" ? "class=active" : "" }}>
+                                                        <a href="{{ path("contact_index") }}" class=""><span>Liên hệ</span></a></li>
+                                                </ul>
+                                            </nav>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- end hreader-content -->
+            </header>
+            <!-- end header -->
+
+            <!-- slideshow -->
+            <section class="slideshow clearfix">
+                <div class="container">
+                    {% block banner %}
+                        <div class="static-bg" style="background:url({{ asset('uploads/layout/static-bg.jpg') }}) no-repeat scroll center center">
+                            {#<div class="breadcrumb clearfix">#}
+                            {#<ul>#}
+                            {#<li class="home" itemscope="" itemtype="">#}
+                            {#<a itemprop="url" href="Index.html" title="Đến trang chủ"><span itemprop="title">Trang chủ</span></a>#}
+                            {#</li>#}
+                            {#<li><b>Link</b> </li>#}
+                            {#</ul>#}
+                            {#</div>#}
+                        </div>
+                    {% endblock %}
+                </div>
+            </section>
+            <!-- start main -->
+            <section class="main clearfix">
+                <div class="container">
+                    {% block body %}
+
+                        {% block navigation %}
+                            <div class="col-md-12">
+                                <section class="top-main">
+                                    <div class="row">
+                                            {% embed "partial/navigation.html.twig" %}
+                                            {% endembed %}
+                                        {% block business_fields %} {% endblock %}
+                                    </div>
+                                </section>
+                                {% block projects %} {% endblock %}
+                            </div>
+                            {% endblock %}
+                        <div class="row">
+                            {% block hot_product %}{% endblock %}
+                            {% block menu_intro %}{% endblock %}
+                            {% block main %}{% endblock %}
+                        </div>
+
+                    {% endblock %}
+                </div>
+            </section>
+            <!-- end main -->
+            <!-- start partner -->
+            {% block partners %} {% endblock %}
+            <!-- end partner -->
+            <hr class="lineblue"/>
+            {% block footer %}
+                <!-- start footer -->
+            <footer class="footer">
+                <div class="container">
+                    <div class="footer-content clearfix">
+                        <div class="footer-top col-md-12">
+                            <div class="row">
+                                <div class="footer-box menu-footer col-md-9">
+                                    <ul class="menu nav navbar-nav">
+                                        <li class="active">
+                                            <a href="{{ path("homepage") }}"><span><i class="fa fa-home"></i>Trang chủ</span></a>
+                                        </li>
+                                        <li><a href="{{ path("intro_index",{slug:'ve-chung-toi'}) }}" class="">
+                                                <span>Giới thiệu</span></a></li>
+                                        <li><a href="{{ path("field_index") }}" class=""><span>Lĩnh vực hoạt động</span></a></li>
+
+                                        <li>
+                                            <a href="{{ path("product_index",{ pageNum:1 }) }}" class=""><span>Dự án</span></a>
+                                        </li>
+                                        <li><a href="{{ path("news_index",{ pageNum:1 }) }}" class=""><span>Tin tức</span></a></li>
+                                        <li><a href="{{ path("recruit_index",{ pageNum:1 }) }}" class=""><span>Tuyển dụng</span></a></li>
+                                        <li><a href="{{ path("contact_index") }}" class=""><span>Liên hệ</span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="footer-box box-social  pull-right">
+                                    <div class="social-icon">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-twitter "></i></a></li>
+                                        </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="footer-box box-address col-md-9 col-sm-12 col-xs-12">
+                        <div class="item">
+                            {{ header_footer['footer'].content | md2html }}
+
+                        </div>
+                    </div>
+                    <div class="footer-box box-letter col-md-3 col-sm-12 col-xs-12">
+                        <div class="item">
+                            <h5>
+                                Đăng ký nhận mail
+                            </h5>
+
+                            <div class="letter-content">
+                                <div class="new-paper">
+                                    <div class="input-box">
+                                        <input type="text" name="email" id="txtNewsletter" class="input-text form-control" value="" placeholder="Your Email Address" />
+                                        <div class="button">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        </footer>
+                <!-- end footer -->
+            {% endblock %}
+        </div>
+        {% block javascripts %}
+        {% endblock %}
+
+    </body>
+</html>

@@ -1,0 +1,265 @@
+{% extends 'layout.html.twig' %}
+{% block navigation %}{% endblock %}
+{% block hot_post %}
+<div class="col-md-3 menu-about">
+    <div class="box-project">
+        <h3 class="title clearfix">
+            <span>Dự án nổi bật</span>
+        </h3>
+        {% set post = hot_posts|first %}
+        {% set image = post.files|first %}
+        {% set url =  path('news_show', { slug: post.slug }) %}
+        {% set image = 'no_image.png' %}
+        {% if post.files is defined and (post.files|first) %}
+            {% set image = (post.files|first).path %}
+        {% endif %}
+        {% set url =  path('news_show', { slug: post.slug }) %}
+        <div class="box-project-block">
+            <div class="item">
+                <div class="image image-resize">
+                    <a href="{{ url }}">
+                        <img class="img-responsive"
+                        src="{{ asset('uploads/posts/') }}{{ image }}"/>
+                    </a>
+                </div>
+                <div class="right-block">
+                    <h2 class="name"><a href="{{ url }}">{{ post.title }}</a></h2>
+                    <div class="description">{{ post.summary }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+    <div class="col-md-3">
+        <div class="menu-news">
+            <h3 class="title clearfix">
+                <span>
+                    Tin tức
+                </span>
+            </h3>
+            <ul>
+                {% for category in categories %}
+                <li><a href="{{ path("news_list",{slug:category.slug, pageNum: 1}) }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="box-news">
+            <h3 class="title clearfix">
+                <span>
+                    Tin tức Hot
+                </span>
+            </h3>
+            <div class="news-content">
+                <div class="news-block clearfix">
+                    {% for post in hot_posts %}
+                        <div class="news-item clearfix">
+                            <div class="col-md-4 col-sm-4 col-xs-4 image">
+                                {% set image = 'no_image.png' %}
+                                {% if post.files is defined and (post.files|first) %}
+                                    {% set image = (post.files|first).path %}
+                                {% endif %}
+                                {% set url =  path('news_show', { slug: post.slug }) %}
+                                <a href="{{ url }}">
+                                    <img src="{{ asset('uploads/posts/') }}{{ image }}" class="img-responsive" />
+                                </a>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8 news-info ">
+                                <h2 class="name"><a href="{{ url }}">{{ post.title }}</a></h2>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        {% set image = 'no_image.png' %}
+        {% set image = 'post3.jpg' %}
+        {% if post.files is defined and (post.files|first) %}
+            {% set image = (post.files|first).name %}
+        {% endif %}
+        {% set url =  path('news_show', { slug: post.slug }) %}
+            <div class="news-detail">
+                <div class="news-block">
+                    <h2> {{ post.title }} </h2>
+                    <div class="date">{{ post.publishedAt | date('d-m-Y H:i:s')}} </div>
+                    <div class="content">
+                        {{ post.content | raw }}
+                    </div>
+                    <div class="social-group">
+                    </div>
+                </div>
+                <div class="news-other">
+                    <h3><span>Tin tức liên quan</span></h3>
+                    <ul>
+                        {% for post in hot_posts  %}
+                        <li><a href="{{ path("news_show",{slug:post.slug}) }}">{{ post.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+    </div>
+</div>
+
+    {#<div class="post-detail clearfix">#}
+        {#<div class="post-block clearfix ">#}
+            {#<div class="row">#}
+                {#<div class="col-md-6 col-sm-6 col-xs-12 clearfix post-image">#}
+                    {#<div class="image text-center">#}
+                        {#{% set image = 'no_image.png' %}#}
+                        {#{% if post.files is defined and (post.files|first) %}#}
+                            {#{% set image = (post.files|first).name %}#}
+                        {#{% endif %}#}
+                        {#{% set url =  path('news_show', { slug: post.slug }) %}#}
+                        {#<img class="img-responsive" src="{{ asset('uploads/posts/') }}{{ image }}" alt=""/>#}
+                    {#</div>#}
+                    {#<div class="small-image owl-carousel">#}
+                        {#<div class="small-image-content">#}
+                            {#<ul id="small-image">#}
+                                {#{% for image in post.files %}#}
+                                {#<li>#}
+                                    {#<a href="#">#}
+                                        {#<img src="{{ asset('uploads/posts/') }}{{ image.name }}" title=""#}
+                                             {#alt="" class="img-responsive"/>#}
+                                    {#</a>#}
+                                {#</li>#}
+                                {#{% endfor %}#}
+                            {#</ul>#}
+                            {#<div class="controls boxprevnext">#}
+                                {#<a class="prev prevlogo"><i class="fa fa-angle-left"></i></a>#}
+                                {#<a class="next nextlogo"><i class="fa fa-angle-right"></i></a>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                {#</div>#}
+                {#<div class="col-md-6 col-sm-6 col-xs-12 clearfix post-info">#}
+                    {#<h2>{{ post.name }}</h2>#}
+
+                    {#<div class="price">#}
+                        {#<span class="price-new">{{ post.price }}</span>#}
+                        {#<span class="price-old">12.800.000</span>#}
+                    {#</div>#}
+                    {#<div class="des">#}
+                        {#{{ post.summary }}#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="post-tabs">#}
+        {#<ul class="nav nav-tabs">#}
+            {#<li role="presentation" class="active"><a href="#">Thông tin sản phẩm</a></li>#}
+        {#</ul>#}
+        {#<div class="tab-content">#}
+            {#{{ post.content | md2html}}#}
+        {#</div>#}
+    {#</div>#}
+    {#<!-- post list -->#}
+    {#<section class="post-content">#}
+        {#<h1 class="title"><span>Sản phẩm liên quan</span></h1>#}
+
+        {#<div class="post-block post-grid clearfix">#}
+            {#<div class="row">#}
+                {#{% for item in related_posts %}#}
+                    {#{% set url = path('news_show', {slug: item.slug}) %}#}
+                    {#{% set image = item.files|first %}#}
+                    {#{% set image = 'no_image.png' %}#}
+                    {#{% if item.files is defined and (item.files|first) %}#}
+                        {#{% set image = (item.files|first).name %}#}
+                    {#{% endif %}#}
+                {#<div class="col-md-3 col-sm-4 col-xs-12 post-resize post-item-box fixheight">#}
+                    {#<div class="post-item">#}
+                        {#<div class="image image-resize">#}
+                            {#<a href="{{ url }}">#}
+                                {#<img class="img-responsive"#}
+                                     {#src="{{ asset('uploads/posts/') }}{{ image }}"/>#}
+                            {#</a>#}
+                            {#<div class="ribbon red"><span class="">-2%</span></div>#}
+                        {#</div>#}
+                        {#<div class="right-block">#}
+                            {#<h2 class="name">#}
+                                {#<a href="#">{{ item.name }}</a>#}
+                            {#</h2>#}
+
+                            {#<div class="price">#}
+                                {#<span class="price-new ">{{ item.price }}</span>#}
+                            {#</div>#}
+
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
+        {#</div>#}
+        {% if related_posts|length >10 %}
+        <div class="navigation">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+    <!-- end post list -->
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#project-carousel').flexslider({
+                animation: "slide",
+                controlNav: true,
+                animationLoop: false,
+                slideshow: true,
+                itemWidth: 100,
+                itemMargin: 10,
+                asNavFor: '#project-slider'
+            });
+
+            $('#project-slider').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: true,
+                slideshow: true,
+                sync: "#project-carousel"
+            });
+
+            var owl = $("#partner-content");
+            owl.owlCarousel({
+                autoPlay: true,
+                autoPlay : 5000,
+                items :6,
+                slideSpeed: 1000,
+                pagination : false,
+                itemsDesktop : [1200,6],
+                itemsDesktopSmall : [980,5],
+                itemsTablet: [767,4],
+                itemsMobile : [480,2]
+            });
+            $(".partner-content .nextlogo").click(function(){
+                owl.trigger('owl.next');
+            });
+            $(".partner-content .prevlogo").click(function(){
+                owl.trigger('owl.prev');
+            });
+
+        });
+    </script>
+{% endblock %}

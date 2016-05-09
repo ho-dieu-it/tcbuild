@@ -1,0 +1,46 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_product_show' %}
+
+{% block main %}
+    <h1>{{ product.name }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'label.product.summary'|trans }}</th>
+                <td>{{ product.summary|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.product.content'|trans }}</th>
+                <td>{{ product.content|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.user.author'|trans }}</th>
+                <td><p>{{ product.authorEmail }}</p></td>
+            </tr>
+            <tr>
+                <th>{{ 'label.product.published_at'|trans }}</th>
+                <td><p>{{ product.createdAt|localizeddate('long', 'medium') }}</p></td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_product_edit', { id: product.id }) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-edit"></i> {{ 'action.product.edit'|trans }}
+        </a>
+    </div>
+
+    <div class="section">
+        {{ include('admin/product/_form.html.twig', {
+            form: delete_form,
+            button_label: 'action.product.delete'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_user_new' %}
+
+{% block main %}
+    <h1>{{ 'title.user.new'|trans }}</h1>
+
+    {{ include('admin/user/_form.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+<div class="col-md-9">
+    <div class="news-detail">
+        <div class="news-block">
+            <h1> {{ service.title }} </h1>
+            <div class="date">{{ service.publishedAt|localizeddate('medium', 'short')}} </div>
+            <div class="content">
+                {{ service.content | md2html }}
+            </div>
+            <div class="social-group">
+            </div>
+        </div>
+        <div class="news-other">
+            <h3><span>Ngành nghề liên quan</span></h3>
+            <ul>
+                {% for related_page in related_pages %}
+                    {% set url =  path('service_show', { slug: related_page.slug }) %}
+                <li>
+                    <a href="{{ url }}">{{ related_page.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var owl = $("#small-image");
+        owl.owlCarousel({
+            autoPlay: true,
+            autoPlay: 5000,
+            items: 4,
+            slideSpeed: 1000,
+            pagination: false,
+            itemsDesktop: [1200, 4],
+            itemsDesktopSmall: [980, 4],
+            itemsTablet: [767, 4],
+            itemsMobile: [480, 3]
+        });
+        $(".small-image-content .nextlogo").click(function () {
+            owl.trigger('owl.next');
+        });
+        $(".small-image-content .prevlogo").click(function () {
+            owl.trigger('owl.prev');
+        });
+    </script>
+{% endblock %}

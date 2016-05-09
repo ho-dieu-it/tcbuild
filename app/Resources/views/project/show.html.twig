@@ -1,0 +1,223 @@
+{% extends 'layout.html.twig' %}
+{% block navigation %}{% endblock %}
+
+{% block main %}
+    <div class="col-md-3">
+        <div class="menu-about">
+            <h3 class="title clearfix">
+                <span>Dự án đã thực hiện</span>
+            </h3>
+            <ul>
+                <li><a href="{{ path('project_index',{pageNum:1}) }}">Tất cả</a></li>
+                {% for category in categories %}
+                    <li><a href="{{ path('project_list', { slug:category.slug, pageNum: 1 }) }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        {% set image = 'no_image.png' %}
+        {% set image = 'product3.jpg' %}
+    {% if post.files is defined and (post.files|first) %}
+        {% set image = (post.files|first).path %}
+    {% endif %}
+    {% set url =  path('project_show', { slug: post.slug }) %}
+    <h1 class="title clearfix"><span>{{ post.title }}</span></h1>
+    <div class="project-detail clearfix">
+        <div class="project-block clearfix ">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 clearfix product-image">
+                    <div id="project-slider" class="flexslider project-slider">
+                        <ul class="slides">
+                            {% for image in post.files %}
+                                <li class="image">
+                                    <img src="{{ asset('uploads/posts/') }}{{ image.path }}" title=""
+                                         alt="" class="img-responsive"/>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div id="project-carousel" class="flexslider project-carousel">
+                        <ul class="slides small-image-content">
+                            {% for image in post.files %}
+                                <li class="small-image-item">
+                                    <img src="{{ asset('uploads/posts/') }}{{ image.path }}" title=""
+                                         alt="" class="img-responsive"/>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="project-tabs">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#">Thông tin</a></li>
+        </ul>
+        <div class="tab-content">
+            {{ post.content | raw }}
+        </div>
+    </div>
+</div>
+
+    {#<div class="product-detail clearfix">#}
+        {#<div class="product-block clearfix ">#}
+            {#<div class="row">#}
+                {#<div class="col-md-6 col-sm-6 col-xs-12 clearfix product-image">#}
+                    {#<div class="image text-center">#}
+                        {#{% set image = 'no_image.png' %}#}
+                        {#{% if post.images is defined and (post.images|first) %}#}
+                            {#{% set image = (post.images|first).name %}#}
+                        {#{% endif %}#}
+                        {#{% set url =  path('product_show', { slug: post.slug }) %}#}
+                        {#<img class="img-responsive" src="{{ asset('uploads/posts/') }}{{ image }}" alt=""/>#}
+                    {#</div>#}
+                    {#<div class="small-image owl-carousel">#}
+                        {#<div class="small-image-content">#}
+                            {#<ul id="small-image">#}
+                                {#{% for image in post.images %}#}
+                                {#<li>#}
+                                    {#<a href="#">#}
+                                        {#<img src="{{ asset('uploads/posts/') }}{{ image.name }}" title=""#}
+                                             {#alt="" class="img-responsive"/>#}
+                                    {#</a>#}
+                                {#</li>#}
+                                {#{% endfor %}#}
+                            {#</ul>#}
+                            {#<div class="controls boxprevnext">#}
+                                {#<a class="prev prevlogo"><i class="fa fa-angle-left"></i></a>#}
+                                {#<a class="next nextlogo"><i class="fa fa-angle-right"></i></a>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                {#</div>#}
+                {#<div class="col-md-6 col-sm-6 col-xs-12 clearfix product-info">#}
+                    {#<h2>{{ post.name }}</h2>#}
+
+                    {#<div class="price">#}
+                        {#<span class="price-new">{{ post.price }}</span>#}
+                        {#<span class="price-old">12.800.000</span>#}
+                    {#</div>#}
+                    {#<div class="des">#}
+                        {#{{ post.summary }}#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="product-tabs">#}
+        {#<ul class="nav nav-tabs">#}
+            {#<li role="presentation" class="active"><a href="#">Thông tin sản phẩm</a></li>#}
+        {#</ul>#}
+        {#<div class="tab-content">#}
+            {#{{ post.content | md2html}}#}
+        {#</div>#}
+    {#</div>#}
+    {#<!-- product list -->#}
+    {#<section class="product-content">#}
+        {#<h1 class="title"><span>Sản phẩm liên quan</span></h1>#}
+
+        {#<div class="product-block product-grid clearfix">#}
+            {#<div class="row">#}
+                {#{% for item in related_products %}#}
+                    {#{% set url = path('product_show', {slug: item.slug}) %}#}
+                    {#{% set image = item.images|first %}#}
+                    {#{% set image = 'no_image.png' %}#}
+                    {#{% if item.images is defined and (item.images|first) %}#}
+                        {#{% set image = (item.images|first).name %}#}
+                    {#{% endif %}#}
+                {#<div class="col-md-3 col-sm-4 col-xs-12 product-resize product-item-box fixheight">#}
+                    {#<div class="product-item">#}
+                        {#<div class="image image-resize">#}
+                            {#<a href="{{ url }}">#}
+                                {#<img class="img-responsive"#}
+                                     {#src="{{ asset('uploads/posts/') }}{{ image }}"/>#}
+                            {#</a>#}
+                            {#<div class="ribbon red"><span class="">-2%</span></div>#}
+                        {#</div>#}
+                        {#<div class="right-block">#}
+                            {#<h2 class="name">#}
+                                {#<a href="#">{{ item.name }}</a>#}
+                            {#</h2>#}
+
+                            {#<div class="price">#}
+                                {#<span class="price-new ">{{ item.price }}</span>#}
+                            {#</div>#}
+
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
+        {#</div>#}
+        {% if related_posts|length >10 %}
+        <div class="navigation">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+    <!-- end product list -->
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#project-carousel').flexslider({
+                animation: "slide",
+                controlNav: true,
+                animationLoop: false,
+                slideshow: true,
+                itemWidth: 100,
+                itemMargin: 10,
+                asNavFor: '#project-slider'
+            });
+
+            $('#project-slider').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: true,
+                slideshow: true,
+                sync: "#project-carousel"
+            });
+
+            var owl = $("#partner-content");
+            owl.owlCarousel({
+                autoPlay: true,
+                autoPlay : 5000,
+                items :6,
+                slideSpeed: 1000,
+                pagination : false,
+                itemsDesktop : [1200,6],
+                itemsDesktopSmall : [980,5],
+                itemsTablet: [767,4],
+                itemsMobile : [480,2]
+            });
+            $(".partner-content .nextlogo").click(function(){
+                owl.trigger('owl.next');
+            });
+            $(".partner-content .prevlogo").click(function(){
+                owl.trigger('owl.prev');
+            });
+
+        });
+    </script>
+{% endblock %}

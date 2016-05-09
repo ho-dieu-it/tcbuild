@@ -1,0 +1,202 @@
+{% extends 'layout.html.twig' %}
+
+{% block body_id 'homepage' %}
+{% block banner %}
+    <div class="col-md-12  no-padding">
+        <div class=" clearfix slideshow-block2">
+            <div class="slideshow-content clearfix">
+                <div class="border-bottom">
+
+                </div>
+                <div class="flexslider" id="home-slideshow">
+                    <ul class="slides">
+                        {% for banner in banners %}
+                        <li>
+                            <img src="{{ asset('uploads/banners/')}}{{ banner.image }}" />
+                            <div class="slide-description hidden-xs wow animated fadeInDown">
+                                <h3><a href="#">Tâm Công Construction</a></h3>
+                                <div class="text-description">
+                                    {{ banner.description | md2html }}
+                                </div>
+
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block business_fields %}
+    <div class="col-md-9 services">
+        <div class="row">
+            {% for fields in present_fields %}
+                {% set field = fields[0] %}
+                {% set url = path('field_index',{slug:fields.slug}) %}
+                {% if field.files is defined and (field.files|first) %}
+                    {% set image = (field.files|first).path %}
+                {% endif %}
+                <div class="col-md-4">
+                    <h3 class="title">{{ field.title }}</h3>
+                    <div class="image">
+                        <a href="{{ url }}">
+                            <img class="img-responsive" src="{{ asset('uploads/posts/')}}{{ image }}">
+                        </a>
+                    </div>
+                    <p> {{ field.summary }}
+                        <a href="{{ url }}" class="viewmore">xem thêm</a></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block projects %}
+    <section class="tab-category-container clearfix">
+        <div class="row">
+            <div class="tabs-category clearfix">
+                <div class="tab-content clearfix">
+                    <div class="tabs-title">
+                        <div id="" class="tab-title">
+                            <h3>
+                                <span>Dự án </span>đã thực hiện
+                            </h3>
+                        </div>
+                    </div>
+                    <ul class="tab-cates">
+                        <li data-title="" rel=""  class="active">
+                            <span data-id="0" class="project-tab_span"> Tất cả </span></li>
+                        {% for category in project_categories %}
+                            <li rel="" class="project-tab">
+                                <span data-id="{{ category.id }}" class="project-tab_span">{{ category.name }}</span></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% for present_project in present_projects %}
+                {% set style = loop.first ? "": "style=display:none" %}
+                {% set row_id = loop.first ? 0: present_project[0]['category_id']  %}
+                <div class="row slider_id_{{ row_id }} slider_div" id="product-slides" {{ style }} >
+                <div class="product-slide product-content owl-carousel ">
+                    <div class="product-block product-grid clearfix products-slide">
+                        {% for products in present_project %}
+                            {% set product = products[0] %}
+                        {% set image = 'no_image.png' %}
+                        {% if product.files is defined and (product.files|first) %}
+                        {% set image = (product.files|first).path %}
+                        {% endif %}
+                        {% set url =  path('product_show', { slug: product.slug }) %}
+                        <div class="product-resize product-item-box fixheight">
+                            <div class="product-item">
+                                <div class="image image-resize" style="">
+                                    <a href="{{ url }}">
+                                        <img class="img-responsive" src="{{ asset('uploads/posts/') }}{{ image }}"/>
+                                    </a>
+                                    <div class="overlay">
+                                    </div>
+                                    <span class="new"></span>
+                                </div>
+                                <div class="right-block">
+                                    <h2 class="name">
+                                        <a href="{{ url }}">{{ product.title }}</a>
+                                    </h2>
+                                    <p>{{ product.summary }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="controls boxprevnext">
+                        <a class="prev prevlogo"><i class="fa fa-angle-left"></i></a>
+                        <a class="next nextlogo"><i class="fa fa-angle-right"></i></a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </section>
+{% endblock %}
+
+{% block partners %}
+    <section class="partner clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="partner-content owl-carousel ">
+                    <div class="partner-block" id="partner-content">
+                        {% for customer in customers %}
+                            {% set image = customer.logo %}
+                            <div class="partner-item">
+                                <a href="#">
+                                    <img src="{{ asset('uploads/customers/')}}{{ image }}" alt="" class="img-responsive" />
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#home-slideshow').flexslider({
+                animation: "fade",
+                slideshow: true,
+                slideshowSpeed: 6000,
+                pauseOnHover: true,
+                directionNav: true,
+                controlNav: false,
+                prevText: "",
+                nextText: "",
+            });
+
+            var owl = $("#partner-content");
+            owl.owlCarousel({
+                autoPlay: false,
+                autoPlay: 5000,
+                items: 5,
+                slideSpeed: 1000,
+                pagination: false,
+                itemsDesktop: [1200, 5],
+                itemsDesktopSmall: [980, 3],
+                itemsTablet: [767, 2],
+                itemsMobile: [480, 1]
+            });
+            $(".partner-content .nextlogo").click(function () {
+                owl.trigger('owl.next');
+            });
+            $(".partner-content .prevlogo").click(function () {
+                owl.trigger('owl.prev');
+            });
+
+            var owlproductslide2 = $(".products-slide");
+            owlproductslide2.owlCarousel({
+                autoPlay: false,
+                autoPlay: 5000,
+                items: 5,
+                slideSpeed: 1000,
+                pagination: false,
+                itemsDesktop: [1200, 5],
+                itemsDesktopSmall: [980, 3],
+                itemsTablet: [767, 2],
+                itemsMobile: [480, 1]
+
+            });
+            $(".product-slide .nextlogo").click(function () {
+                owlproductslide2.trigger('owl.next');
+            })
+            $(".product-slide .prevlogo").click(function () {
+                owlproductslide2.trigger('owl.prev');
+            });
+
+        });
+
+    </script>
+{% endblock %}

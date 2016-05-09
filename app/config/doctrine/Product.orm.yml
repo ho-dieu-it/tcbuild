@@ -1,0 +1,48 @@
+AppBundle\Entity\Product:
+    type: entity
+    repositoryClass: AppBundle\Repository\ProductRepository
+    table: product
+    id:
+      id:
+        type: integer
+        generator :
+          strategy: AUTO
+    manyToOne:
+      category:
+        targetEntity: Category
+        inversedBy: products
+        joinColumn:
+          name: category_id
+          referencedColumnName: id
+          nullable: false
+    fields:
+      name:
+        type: string
+        length: 100
+      summary:
+        type: string
+      code:
+        type: string
+      slug:
+        type: string
+      content:
+        type: string
+      price:
+        type: decimal
+        scale: 2
+      createdAt:
+        type: datetime
+      modifiedAt:
+        type: datetime
+        nullable: true
+      authorEmail:
+        type: string
+    oneToMany:
+      images:
+        targetEntity: Image
+        mappedBy: product
+        cascade: remove
+
+
+
+

@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_page_show' %}
+
+{% block main %}
+    <h1>{{ page.title }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'label.page.title'|trans }}</th>
+                <td>{{ page.title|md2html }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.page.published_at'|trans }}</th>
+                <td><p>{{ page.createdAt|localizeddate('long', 'medium') }}</p></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('admin_menu_index') }}"> {{ 'action.page.list'|trans }}
+    </a>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_page_edit', { id: page.id }) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-edit"></i> {{ 'action.page.edit'|trans }}
+        </a>
+    </div>
+
+    <div class="section">
+        {{ include('admin/page/_form.html.twig', {
+            form: delete_form,
+            button_label: 'action.page.delete'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+
+{% endblock %}

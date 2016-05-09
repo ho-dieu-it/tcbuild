@@ -1,0 +1,71 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_post_index' %}
+
+{% block main %}
+    <div class="box">
+        <div class="box-header">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{{ 'label.customer.name'|trans }}</th>
+                    <th>{{ 'label.customer.address'|trans }}</th>
+                    <th>{{ 'label.customer.email'|trans }}</th>
+                    <th>{{ 'label.customer.phone'|trans }}</th>
+                    <th>{{ 'label.customer.createdAt'|trans }}</th>
+                    <th>{{ 'label.customer.uploadLogo'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.address }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.createdAt|localizeddate('long', 'medium') }}</td>
+                        <td><img src="{{ asset('uploads/customers/') }}{{ customer.logo }}" with="100px" height="100px"></td>
+                        <td>
+                            <div class="item-actions">
+                                <a href="{{ path('admin_customer_show', { id: customer.id }) }}" class="btn btn-sm btn-default">
+                                    {{ 'action.show'|trans }}
+                                </a>
+
+                                {#{% if customer.isAuthor(app.user) %}#}
+                                    <a href="{{ path('admin_customer_edit', { id: customer.id }) }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
+                                    </a>
+                                {#{% endif %}#}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{{ 'label.customer.name'|trans }}</th>
+                    <th>{{ 'label.customer.address'|trans }}</th>
+                    <th>{{ 'label.customer.email'|trans }}</th>
+                    <th>{{ 'label.customer.phone'|trans }}</th>
+                    <th>{{ 'label.customer.createdAt'|trans }}</th>
+                    <th>{{ 'label.customer.uploadLogo'|trans }}</th>
+                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        <a href="{{ path('admin_customer_new') }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus"></i> {{ 'action.customer.create'|trans }}
+        </a>
+    </div>
+
+ {#   {{ parent() }}
+
+    {{ show_source_code(_self) }}#}
+{% endblock %}

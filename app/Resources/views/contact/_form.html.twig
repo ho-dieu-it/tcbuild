@@ -1,0 +1,44 @@
+{#
+    By default, forms enable client-side validation. This means that you can't
+    test the server-side validation errors from the browser. To temporarily
+    disable this validation, add the 'novalidate' attribute:
+
+    {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
+#}
+
+{{ form_start(form) }}
+    {#{{ form_widget(form) }}#}
+    <div class="form-group input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
+        {{ form_widget(form.name) }}
+        {#<input type="text" placeholder="Họ tên" name="name" id="" class="form-control" />#}
+    </div>
+    <div class="form-group input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+        {{ form_widget(form.address) }}
+        {#<input type="text" placeholder="Địa chỉ" name="address" id="" class="form-control" />#}
+    </div>
+    <div class="form-group input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        {{ form_widget(form.email) }}
+        {#<input type="email" placeholder="Email" name="email" id="" class="form-control" />#}
+    </div>
+    <div class="form-group input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+        {{ form_widget(form.phone) }}
+        {#<input type="text" placeholder="Điện thoại" name="phone" id="" class="form-control" />#}
+    </div>
+    <div class="form-group input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
+        {{ form_widget(form.subject) }}
+        {#<input type="text" placeholder="Tiêu đề" name="subject" id="" class="form-control" />#}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.body) }}
+        {#<textarea placeholder="Nội dung" name="body" class="form-control" rows="3"></textarea>#}
+    </div>
+    <button class="btn btn-default" type="submit">Gởi</button>
+    {#<input type="submit" value="{{ button_label|default('action.post.create'|trans) }}"#}
+           {#class="{{ button_css|default("btn btn-default") }}" />#}
+{{ form_end(form) }}
+

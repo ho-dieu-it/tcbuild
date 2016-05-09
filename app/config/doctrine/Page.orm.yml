@@ -1,0 +1,25 @@
+AppBundle\Entity\Page:
+    type: entity
+    repositoryClass: AppBundle\Repository\PageRepository
+    table: page
+    id:
+      id:
+        type: integer
+        generator :
+          strategy: AUTO
+    fields:
+      title:
+        type: string
+        length: 100
+      slug:
+        type: string
+        length: 100
+      summary:
+        type: string
+      content:
+        type: string
+      authorEmail:
+         type: string
+         length: 100
+      publishedAt:
+         type: datetime

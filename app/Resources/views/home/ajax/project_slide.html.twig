@@ -1,0 +1,35 @@
+<div class="product-slide product-content owl-carousel ">
+    <div class="product-block product-grid clearfix" id="product-slide">
+        {% for products in present_projects %}
+            {% set product = products[0] %}
+            {% set image = 'no_image.png' %}
+            {% if product.files is defined and (product.files|first) %}
+                {% set image = (product.files|first).path %}
+            {% endif %}
+            {% set url =  path('product_show', { slug: product.slug }) %}
+            <div class="product-resize product-item-box fixheight">
+                <div class="product-item">
+                    <div class="image image-resize">
+                        <a href="{{ url }}">
+                            <img class="img-responsive" src="{{ asset('uploads/posts/') }}{{ image }}"/>
+                        </a>
+                        <div class="overlay">
+                        </div>
+                        <span class="new"></span>
+                    </div>
+                    <div class="right-block">
+                        <h2 class="name">
+                            <a href="{{ url }}">{{ product.title }}</a>
+                        </h2>
+                        <p>{{ product.summary }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="controls boxprevnext">
+        <a class="prev prevlogo"><i class="fa fa-angle-left"></i></a>
+        <a class="next nextlogo"><i class="fa fa-angle-right"></i></a>
+    </div>
+
+</div>

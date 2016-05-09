@@ -1,0 +1,49 @@
+<div class="col-md-3 menu">
+    <div class="block-menu">
+        <div class="top"></div>
+        <div class="center">
+            <h2 class="title">Lĩnh vực hoạt động</h2>
+            <ul>
+                {% for category in menus %}
+                    <li>
+                        <a href="{{ path('field_index', { slug: category.slug }) }}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="bottom"></div>
+    </div>
+</div>
+{#
+<div class="menu-cate">
+    <h1 class="menu-cate-title clearfix">
+        <i class="fa fa-home"></i>
+        <span>sản phẩm</span>
+    </h1>
+    <ul class="menu-cate-content">
+        {% for category in menus %}
+            <li>
+                <a href="{{ path('product_list', { slug: category.slug, pageNum: page }) }}">
+                    {{ category.name }}
+                </a>
+                {% if category.children is defined %}
+                    <div class="sub-menu hidden-xs">
+                        <ul class="colum0">
+                            {% for child in category.children %}
+                                <li>
+                                    <a href="{{ path('product_list', { slug: child.slug, pageNum:page }) }}">
+                                        {{ child.name | md2html }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+#}
+

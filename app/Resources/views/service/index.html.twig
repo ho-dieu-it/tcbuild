@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+{% block navigation %}
+    {{ parent() }}
+{% endblock %}
+{% block main %}
+<div class="col-md-9">
+    <section class="service-content clearfix">
+        <h1 class="title clearfix">
+            <span>Nghành nghề</span>
+        </h1>
+        {% if services is empty %}
+            <div>Ngành nghề đang cập nhât.</div>
+        {% else %}
+            <div class="service-block service-grid clearfix">
+            {% for service in services %}
+                {% set image = 'no_image.png' %}
+                {% if service.images is defined and (service.images|first) %}
+                    {% set image = (service.images|first).name %}
+                {% endif %}
+                {% set url =  path('service_show', { slug: service.slug }) %}
+                <div class="col-md-6 col-sm-6 col-xs-12 service-item-box">
+                    <div class="service-item">
+                        <h2 class="name">
+                            <a href="{{ url }}">{{ service.title }}</a>
+                        </h2>
+                        <div class="right-block">
+                            <div class="image col-md-5">
+                                <a href="{{ url }}">
+                                    <img src="{{ asset('uploads/services/') }}{{ image }}" class="img-responsive" />
+                                    <div class="view"></div>
+                                </a>
+                            </div>
+                            <div class="description col-md-7">
+                                {{ service.summary |md2html }}
+                                <a href="{{ url }}" class="view-more">...chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

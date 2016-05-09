@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_product_edit' %}
+
+{% block main %}
+    <h1>{{ 'title.page.edit'|trans({'%id%': page.id}) }}</h1>
+
+    {{ include('admin/field/_form.html.twig', {
+        form: edit_form,
+        button_label: 'action.page.save'|trans,
+        menu_id: menu_id,
+    }, with_context = false) }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        {{ include('admin/field/_form.html.twig', {
+            form: delete_form,
+            button_label: 'action.page.delete'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+
+    {{ parent() }}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(function () {
+
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('app_page[content]');
+
+        });
+    </script>
+
+{% endblock %}
