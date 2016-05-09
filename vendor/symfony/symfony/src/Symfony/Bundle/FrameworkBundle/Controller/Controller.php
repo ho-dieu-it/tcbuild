@@ -420,21 +420,4 @@ class Controller extends ContainerAware
 
         return $this->container->get('security.csrf.token_manager')->isTokenValid(new CsrfToken($id, $token));
     }
-    protected function getHeaderFooter()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Page');
-
-        $page = new Page();
-        $page->setSlug('header');
-
-        $header = $repo->findPageBySlug($page);
-
-        $page = new Page();
-        $page->setSlug('footer');
-
-        $footer = $repo->findPageBySlug($page);
-
-        return array('header'=>$header, 'footer' => $footer);
-    }
 }
