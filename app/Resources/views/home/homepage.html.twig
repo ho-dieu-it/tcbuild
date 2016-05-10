@@ -87,7 +87,7 @@
                         {% if product.files is defined and (product.files|first) %}
                         {% set image = (product.files|first).path %}
                         {% endif %}
-                        {% set url =  path('product_show', { slug: product.slug }) %}
+                        {% set url =  path('project_show', { slug: product.slug }) %}
                         <div class="product-resize product-item-box fixheight">
                             <div class="product-item">
                                 <div class="image image-resize" style="">

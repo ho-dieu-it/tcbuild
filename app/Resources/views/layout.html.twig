@@ -76,23 +76,29 @@
                                                 <a class="navbar-brand hidden-md hidden-lg hidden-sm" href="Index.html">Menu</a>
                                             </div>
                                             <nav id="mobile-menu" class="mobile-menu collapse navbar-collapse">
+                                                {% set route = app.request.get("_route") %}
+                                                {% set introArr =  ['intro_index','intro_list','intro_show']%}
+                                                {% set fieldArr =  ['field_index','field_list','field_show']%}
+                                                {% set projectArr =  ['project_index','project_list','project_show']%}
+                                                {% set newsArr =  ['news_index','news_list','news_show']%}
+                                                {% set recruitArr =  ['recruit_index','recruit_list','recruit_show']%}
                                                 <ul class="menu nav navbar-nav">
-                                                    <li {{ ( app.request.get("_route") == "homepage" or app.request.get("_route") == "" )  ? "class=active" : "" }}>
+                                                    <li {{ ( route == "homepage" or route == "" )  ? "class=active" : "" }}>
                                                         <a href="{{ url('homepage') }}"><span><i class="fa fa-home"></i>Trang chủ</span></a>
                                                     </li>
-                                                    <li {{ app.request.get("_route") == "intro_index" ? "class=active" : "" }}>
+                                                    <li {{ ( route in introArr ) ? "class=active" : "" }}>
                                                         <a href="{{ path('intro_index',{slug:'ve-chung-toi'}) }}" class=""><span>Giới thiệu</span></a></li>
-                                                    <li {{ app.request.get("_route") == "field_index" ? "class=active" : "" }}>
+                                                    <li {{ ( route in fieldArr )? "class=active" : "" }}>
                                                         <a href="{{ path('field_index') }}" class=""><span>Lĩnh vực hoạt động</span></a></li>
 
-                                                    <li {{ app.request.get("_route") == "project_index" ? "class=active" : "" }}>
+                                                    <li {{ ( route in projectArr ) ? "class=active" : "" }}>
                                                         <a href="{{ path('project_index',{ pageNum:1 }) }}" class=""><span>Dự án</span></a>
                                                     </li>
-                                                    <li {{ app.request.get("_route") == "news_index" ? "class=active" : "" }}>
+                                                    <li {{ ( route in newsArr ) ? "class=active" : "" }}>
                                                         <a href="{{ path('news_index',{ pageNum:1 }) }}" class=""><span>Tin tức</span></a></li>
-                                                    <li {{ app.request.get("_route") == "recruit_index" ? "class=active" : "" }}>
+                                                    <li {{ ( route in recruitArr ) ? "class=active" : "" }}>
                                                         <a href="{{ path('recruit_index',{ pageNum:1 }) }}" class=""><span>Tuyển dụng</span></a></li>
-                                                    <li {{ app.request.get("_route") == "contact_index" ? "class=active" : "" }}>
+                                                    <li {{ route == "contact_index"  ? "class=active" : "" }}>
                                                         <a href="{{ path("contact_index") }}" class=""><span>Liên hệ</span></a></li>
                                                 </ul>
                                             </nav>
