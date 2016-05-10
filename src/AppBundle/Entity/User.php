@@ -133,6 +133,6 @@ class User implements UserInterface
 
     public function setPlainPassword($password)
     {
-        $this->plainPassword = md5($password);
+        $this->plainPassword = $password;
     }
 }

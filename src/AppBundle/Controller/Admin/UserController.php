@@ -188,6 +188,10 @@ class UserController extends BaseController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 //            $user->setSlug($this->get('slugger')->slugify($user->getName()));
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
             $em->flush();
 
             return $this->redirectToRoute('admin_user_edit', array('id' => $user->getId()));
