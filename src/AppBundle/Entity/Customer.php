@@ -54,6 +54,13 @@ class Customer
      * 
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     */
+    private $website;
+
     /**
      * @ORM\Column(type="string")
      */
@@ -158,6 +165,16 @@ class Customer
     public function setFax($fax)
     {
         $this->fax = $fax;
+    }
+
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    public function setWebsite($website)
+    {
+        $this->website = $website;
     }
 
     public function getAuthorEmail()

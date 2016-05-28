@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="vn" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="title.home">
+                <source>title.home</source>
+                <target>Home</target>
+            </trans-unit>
             <trans-unit id="note">
                 <source>note</source>
                 <target>NOTE</target>
@@ -529,7 +533,7 @@
 
             <trans-unit id="title.menu.edit">
                 <source>title.menu.edit</source>
-                <target>Sửa trang</target>
+                <target>Sửa </target>
             </trans-unit>
             <trans-unit id="title.menu.new">
                 <source>title.menu.new</source>
@@ -542,6 +546,10 @@
             <trans-unit id="title.menu.list">
                 <source>title.menu.list</source>
                 <target>Danh sách layout</target>
+            </trans-unit>
+            <trans-unit id="title.menu.show">
+                <source>title.menu.show</source>
+                <target>Chi tiết</target>
             </trans-unit>
             <trans-unit id="label.menu.title">
                 <source>label.menu.title</source>
@@ -762,6 +770,10 @@
                 <source>label.customer.email</source>
                 <target>Email</target>
             </trans-unit>
+            <trans-unit id="label.customer.website">
+                <source>label.customer.website</source>
+                <target>Website</target>
+            </trans-unit>
             <trans-unit id="label.customer.uploadLogo">
                 <source>label.customer.uploadLogo</source>
                 <target>Logo</target>
@@ -797,7 +809,7 @@
 
             <trans-unit id="title.banner.edit">
                 <source>title.banner.edit</source>
-                <target>Sửa</target>
+                <target>Sửa banner</target>
             </trans-unit>
             <trans-unit id="title.banner.new">
                 <source>title.banner.new</source>
@@ -805,11 +817,15 @@
             </trans-unit>
             <trans-unit id="title.banner.management">
                 <source>title.banner.management</source>
-                <target>QUẢN LÝ BANNER</target>
+                <target>Quản lý banner</target>
             </trans-unit>
             <trans-unit id="title.banner.list">
                 <source>title.banner.list</source>
                 <target>Danh sách banner</target>
+            </trans-unit>
+            <trans-unit id="title.banner.show">
+                <source>title.banner.show</source>
+                <target>Chi tiết banner</target>
             </trans-unit>
             <trans-unit id="label.banner.title">
                 <source>label.banner.title</source>

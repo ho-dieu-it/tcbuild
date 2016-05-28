@@ -53,6 +53,19 @@ class MenuController extends BaseController
      */
     public function indexAction()
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.menu.management',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $children = array(
+            'title' => 'title.menu.list',
+            'url' => ''
+        );
+
         $em = $this->getDoctrine()->getManager();
         $menus = $em->getRepository('AppBundle:Menu')->findAll();       
 
@@ -60,6 +73,7 @@ class MenuController extends BaseController
         return $this->render('admin/menu/index.html.twig',
             array(
                 'menus' => $menus,
+                'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
                 'user' => $this->getUser()
             ));
     }

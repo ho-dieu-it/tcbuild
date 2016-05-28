@@ -53,6 +53,9 @@ class CustomerType extends AbstractType
             ->add('email', 'text', array(
                 'label' => 'label.customer.email'
             ))
+            ->add('website', 'text', array(
+                'label' => 'label.customer.website'
+            ))
             ->add('uploadedFile','file',array(
                 'label'=>'label.customer.uploadLogo',
                 'required' => false,

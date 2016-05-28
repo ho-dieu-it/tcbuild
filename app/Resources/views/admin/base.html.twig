@@ -297,7 +297,7 @@
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-                {% embed "partial/admin/sidebar.html.twig" %}
+                {% embed "admin/partial/sidebar.html.twig" %}
                 {% endembed %}
             </section>
             <!-- /.sidebar -->
@@ -307,14 +307,14 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    Quản lý banner
-                    <small>Quản lý banner</small>
-                </h1>
+                {#<h1>#}
+                    {#Quản lý banner#}
+                    {#<small>Danh sách banner</small>#}
+                {#</h1>#}
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Quản lý hệ thống</a></li>
-                    <li><a href="#">Quản lý danh mục</a></li>
-                    <li class="active">Các danh mục</li>
+                    <li><a href="{{ breadCrumb.root.url }}"><i class="fa fa-dashboard"></i> {{ breadCrumb.root.name }} </a></li>
+                    <li><a href="{{ breadCrumb.parent.url }}">{{ breadCrumb.parent.name }}</a></li>
+                    <li class="active">{{ breadCrumb.children.name }}</li>
                 </ol>
             </section>
 

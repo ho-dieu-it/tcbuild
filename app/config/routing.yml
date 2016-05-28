@@ -13,7 +13,7 @@
 #    defaults:
 #        _locale: %locale%
 app:
-    resource: @AppBundle/Controller/
+    resource: '@AppBundle/Controller/'
     type:     annotation
     prefix:   /
     requirements:

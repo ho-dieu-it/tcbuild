@@ -54,9 +54,25 @@ class PageController extends BaseController
      *
      * @Route("/{id}", name="admin_page_index")
      * @Method("GET")
+     *
+     * @param Menu $menu
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Menu $menu)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.menu.management',
+            'url' => $this->container->get('router')->generate('admin_page_index', array('id' => $menu->getId()))
+        );
+        $children = array(
+            'title' => 'title.menu.list',
+            'url' => ''
+        );
+
         $em = $this->getDoctrine()->getManager();
         $pages = $em->getRepository('AppBundle:Page')->findPageByMenu($menu);
 
@@ -64,6 +80,7 @@ class PageController extends BaseController
             array(
                 'pages' => $pages,
                 'menu' => $menu,
+                'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
                 'user' => $this->getUser()
             ));
     }
@@ -77,9 +94,26 @@ class PageController extends BaseController
      * NOTE: the Method annotation is optional, but it's a recommended practice
      * to constraint the HTTP methods each controller responds to (by default
      * it responds to all methods).
+     *
+     * @param Menu $menu
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Menu $menu,Request $request)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.menu.management',
+            'url' => $this->container->get('router')->generate('admin_page_index')
+        );
+        $children = array(
+            'title' => 'title.menu.list',
+            'url' => ''
+        );
+
         $page = new Page();
         $page->setAuthorEmail($this->getUser()->getEmail());
             $form = $this->createForm(new PageType(), $page);
@@ -125,6 +159,7 @@ class PageController extends BaseController
             'page' => $page,
             'menu_id' => $menu->getId(),
             'form' => $form->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }
@@ -137,6 +172,19 @@ class PageController extends BaseController
      */
     public function showAction( Page $page )
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.menu.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_page_index', array('id' => $page->getMenu()->getId()))
+        );
+        $children = array(
+            'title' => 'title.menu.show',
+            'url' => ''
+        );
         // This security check can also be performed:
         //   1. Using an annotation: @Security("post.isAuthor(user)")
         //   2. Using a "voter" (see http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
@@ -150,6 +198,7 @@ class PageController extends BaseController
             'page'        => $page,
             'menu_id'        => $menu_id,
             'delete_form' => $deleteForm->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser()
         ));
     }
@@ -159,9 +208,27 @@ class PageController extends BaseController
      *
      * @Route("/edit/{id}", requirements={"id" = "\d+"}, name="admin_page_edit")
      * @Method({"GET", "POST"})
+     *
+     * @param Page $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction( Page $page, Request $request)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.menu.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_page_index', array('id' => $page->getMenu()->getId()))
+        );
+        $children = array(
+            'title' => 'title.menu.edit',
+            'url' => ''
+        );
+
 //        if (null === $this->getUser() || !$page->isAuthor($this->getUser())) {
 //            throw $this->createAccessDeniedException('Posts can only be edited by their authors.');
 //        }
@@ -211,6 +278,7 @@ class PageController extends BaseController
             'menu_id'        => $menuId,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }

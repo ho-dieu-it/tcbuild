@@ -68,6 +68,20 @@ class UserController extends BaseController
      */
     public function indexAction()
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.user.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_user_index')
+        );
+        $children = array(
+            'title' => 'title.user.list',
+            'url' => ''
+        );
+
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:User');
 //        $query = $em
@@ -86,6 +100,7 @@ class UserController extends BaseController
         return $this->render('admin/user/index.html.twig',
             array(
                 'users' => $users,
+                'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
                 'user' => $this->getUser(),
             ));
     }
@@ -104,6 +119,19 @@ class UserController extends BaseController
      */
     public function newAction(Request $request)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.user.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_user_index')
+        );
+        $children = array(
+            'title' => 'title.user.new',
+            'url' => ''
+        );
         // 1) build the form
         $user = new User();
         $form = $this->createForm(new UserType(), $user);
@@ -131,6 +159,7 @@ class UserController extends BaseController
             'admin/user/new.html.twig',
             array(
                 'form' => $form->createView(),
+                'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
                 'user'        => $this->getUser(),
             )
         );

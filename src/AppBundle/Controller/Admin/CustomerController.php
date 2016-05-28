@@ -55,12 +55,27 @@ class CustomerController extends BaseController
      */
     public function indexAction()
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.customer.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_customer_index')
+        );
+        $children = array(
+            'title' => 'title.customer.list',
+            'url' => ''
+        );
+
         $em = $this->getDoctrine()->getManager();
         $customers = $em->getRepository('AppBundle:Customer')->findAll();
 
         return $this->render('admin/customer/index.html.twig',
             array(
                 'customers' => $customers,
+                'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
                 'user' => $this->getUser()
             ));
     }
@@ -78,6 +93,20 @@ class CustomerController extends BaseController
      */
     public function newAction(Request $request)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.customer.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_customer_index')
+        );
+        $children = array(
+            'title' => 'title.customer.new',
+            'url' => ''
+        );
+
         $customer = new Customer();
         $authorEmail = $this->getUser()->getEmail();
         $customer->setAuthorEmail( $authorEmail );
@@ -112,6 +141,7 @@ class CustomerController extends BaseController
         return $this->render('admin/customer/new.html.twig', array(
             'customer' => $customer,
             'form' => $form->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }
@@ -127,6 +157,20 @@ class CustomerController extends BaseController
      */
     public function showAction( Customer $customer )
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.customer.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_customer_index')
+        );
+        $children = array(
+            'title' => 'title.customer.new',
+            'url' => ''
+        );
+        
         // This security check can also be performed:
         //   1. Using an annotation: @Security("post.isAuthor(user)")
         //   2. Using a "voter" (see http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
@@ -138,6 +182,7 @@ class CustomerController extends BaseController
         return $this->render('admin/customer/show.html.twig', array(
             'customer'        => $customer,
             'delete_form' => $deleteForm->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser()
         ));
     }
@@ -155,6 +200,20 @@ class CustomerController extends BaseController
 //        if (null === $this->getUser() || !$customer->isAuthor($this->getUser())) {
 //            throw $this->createAccessDeniedException('Posts can only be edited by their authors.');
 //        }
+
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.customer.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_customer_index')
+        );
+        $children = array(
+            'title' => 'title.customer.edit',
+            'url' => ''
+        );
 
         $em = $this->getDoctrine()->getManager();
 
@@ -187,10 +246,11 @@ class CustomerController extends BaseController
             return $this->redirectToRoute('admin_customer_index');
         }
 
-        return $this->render('admin/customer/index.html.twig', array(
+        return $this->render('admin/customer/edit.html.twig', array(
             'customer'        => $customer,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }

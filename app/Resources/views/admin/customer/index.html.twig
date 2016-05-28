@@ -12,6 +12,7 @@
                     <th>{{ 'label.customer.address'|trans }}</th>
                     <th>{{ 'label.customer.email'|trans }}</th>
                     <th>{{ 'label.customer.phone'|trans }}</th>
+                    <th>{{ 'label.customer.website'|trans }}</th>
                     <th>{{ 'label.customer.createdAt'|trans }}</th>
                     <th>{{ 'label.customer.uploadLogo'|trans }}</th>
                     <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
@@ -24,6 +25,7 @@
                         <td>{{ customer.address }}</td>
                         <td>{{ customer.email }}</td>
                         <td>{{ customer.phone }}</td>
+                        <td>{{ customer.website }}</td>
                         <td>{{ customer.createdAt|localizeddate('long', 'medium') }}</td>
                         <td><img src="{{ asset('uploads/customers/') }}{{ customer.logo }}" with="100px" height="100px"></td>
                         <td>
@@ -48,6 +50,7 @@
                     <th>{{ 'label.customer.address'|trans }}</th>
                     <th>{{ 'label.customer.email'|trans }}</th>
                     <th>{{ 'label.customer.phone'|trans }}</th>
+                    <th>{{ 'label.customer.website'|trans }}</th>
                     <th>{{ 'label.customer.createdAt'|trans }}</th>
                     <th>{{ 'label.customer.uploadLogo'|trans }}</th>
                     <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>

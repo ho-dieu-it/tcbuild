@@ -58,11 +58,27 @@ class BannerController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $banners = $em->getRepository('AppBundle:Banner')->findAll();
 
-            return $this->render('admin/banner/index.html.twig',
-            array(
-                'banners' => $banners,
-                'user' => $this->getUser()
-            ));
+        $url = $this->container->get('router')->generate('admin_banner_index');
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_banner_index')
+        );
+        $parent = array(
+            'title' => 'title.banner.management',
+            'url' => $url
+        );
+        $children = array(
+            'title' => 'title.banner.list',
+            'url' => $url
+        );
+
+
+        return $this->render('admin/banner/index.html.twig',
+        array(
+            'banners' => $banners,
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
+            'user' => $this->getUser()
+        ));
     }
 
     /**
@@ -78,6 +94,19 @@ class BannerController extends BaseController
      */
     public function newAction(Request $request)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_banner_index')
+        );
+        $parent = array(
+            'title' => 'title.banner.management',
+            'url' => $this->container->get('router')->generate('admin_banner_index')
+        );
+        $children = array(
+            'title' => 'title.banner.new',
+            'url' => ''
+        );
+
         $banner = new Banner();
         $authorEmail = $this->getUser()->getEmail();
         $banner->setAuthorEmail( $authorEmail );
@@ -108,10 +137,10 @@ class BannerController extends BaseController
 
             return $this->redirectToRoute('admin_banner_index');
         }
-
         return $this->render('admin/banner/new.html.twig', array(
             'banner' => $banner,
             'form' => $form->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }
@@ -127,6 +156,19 @@ class BannerController extends BaseController
      */
     public function showAction( Banner $banner )
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_banner_index')
+        );
+        $parent = array(
+            'title' => 'title.banner.management',
+            'url' => $this->container->get('router')->generate('admin_banner_index')
+        );
+        $children = array(
+            'title' => 'title.banner.show',
+            'url' => ''
+        );
+
         // This security check can also be performed:
         //   1. Using an annotation: @Security("post.isAuthor(user)")
         //   2. Using a "voter" (see http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
@@ -138,6 +180,7 @@ class BannerController extends BaseController
         return $this->render('admin/banner/show.html.twig', array(
             'banner'        => $banner,
             'delete_form' => $deleteForm->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser()
         ));
     }
@@ -152,6 +195,19 @@ class BannerController extends BaseController
      */
     public function editAction( Banner $banner, Request $request)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_banner_index')
+        );
+        $parent = array(
+            'title' => 'title.banner.management',
+            'url' => $this->container->get('router')->generate('admin_banner_index')
+        );
+        $children = array(
+            'title' => 'title.banner.edit',
+            'url' => ''
+        );
+
 //        if (null === $this->getUser() || !$banner->isAuthor($this->getUser())) {
 //            throw $this->createAccessDeniedException('Posts can only be edited by their authors.');
 //        }     
@@ -189,6 +245,7 @@ class BannerController extends BaseController
             'banner'        => $banner,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }

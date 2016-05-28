@@ -8,7 +8,7 @@
                         {#<a href="#"><i class="fa fa-circle text-success"></i> Online</a>#}
                     {#</div>#}
                 {#</div>#}
-<!-- search form -->
+{#<!-- search form -->#}
 {#<form action="#" method="get" class="sidebar-form">#}
                     {#<div class="input-group">#}
                         {#<input type="text" name="q" class="form-control" placeholder="Search...">#}
@@ -20,11 +20,11 @@
 <!-- /.search form -->
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
-    <li class="header">QUẢN LÝ HỆ THÔNG</li>
-
-    <li class="active treeview">
+    <li class="header">QUẢN LÝ HỆ THỐNG</li>
+    {% set route = app.request.get("_route") %}
+    <li class="{{ ( route == "admin_menu_index" or route == "" )  ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i>
+            <i class="fa fa-files-o"></i>
             <span>{{ 'title.menu.management'|trans|upper|upper }}</span>
             <i class="fa fa-angle-left pull-right"></i>
         </a>
@@ -34,7 +34,7 @@
                     {#<i class="fa fa-circle-o"></i> {{ 'title.menu.new'|trans }}#}
                 {#</a>#}
             {#</li>#}
-            <li>
+            <li {{ ( route == "admin_menu_index" or route == "" )  ? "class=active" : "" }}>
                 <a href="{{ path('admin_menu_index') }}">
                     <i class="fa fa-circle-o"></i>
                     {{ 'title.menu.list'|trans }}
@@ -42,121 +42,136 @@
         </ul>
     </li>
 
-    <li class="active treeview">
+    <li class="{{ ( route == "admin_customer_index" or route == "" )  ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i>
+            <i class="fa fa-user"></i>
             <span>{{ 'title.customer.management'|trans|upper|upper }}</span>
             <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li class="active">
+            <li {{ ( route == "admin_customer_new" or route == "" )  ? "class=active" : "" }}>
             <a href="{{ path('admin_customer_new') }}">
             <i class="fa fa-circle-o"></i> {{ 'title.customer.new'|trans }}
             </a>
             </li>
-            <li>
+            <li {{ ( route == "admin_customer_index" or route == "" )  ? "class=active" : "" }}>
                 <a href="{{ path('admin_customer_index') }}">
                     <i class="fa fa-circle-o"></i>
                     {{ 'title.customer.list'|trans }}
                 </a></li>
         </ul>
     </li>
-
-    <li class="active treeview">
+    {% set bannerArr =  ['admin_banner_index','admin_banner_show','admin_banner_edit', 'admin_banner_new']%}
+    <li class="{{ ( route in bannerArr ) ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i>
+            <i class="fa fa-desktop"></i>
             <span>{{ 'title.banner.management'|trans|upper|upper }}</span>
             <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li class="active">
+            <li {{ ( route == "admin_banner_new" )  ? "class=active" : "" }}>
                 <a href="{{ path('admin_banner_new') }}">
                     <i class="fa fa-circle-o"></i> {{ 'title.banner.new'|trans }}
                 </a>
             </li>
-            <li>
+            <li {{ ( route == "admin_banner_index" )  ? "class=active" : "" }}>
                 <a href="{{ path('admin_banner_index') }}">
                     <i class="fa fa-circle-o"></i>
                     {{ 'title.banner.list'|trans }}
                 </a></li>
         </ul>
     </li>
-
-    <li class="active treeview">
+    {% set postArr =  ['admin_post_category_index','admin_post_category_new','admin_post_category_edit','admin_post_category_show']%}
+    <li class="{{ ( route in postArr ) and type.code == 1  ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i> <span>{{ 'title.field.management'|trans|upper }}</span><i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-folder-open"></i> <span>{{ 'title.field.management'|trans|upper }}</span><i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li class="active"><a href="{{ path('admin_post_category_new', { type: 1}) }}"><i class="fa fa-circle-o"></i> {{ 'title.field.new'|trans }}</a></li>
-            <li><a href="{{ path('admin_post_category_index', { type: 1}) }}"><i class="fa fa-circle-o"></i> {{ 'title.field.list'|trans }}</a></li>
+            <li {{ ( route == "admin_post_category_new" )  ? "class=active" : "" }}>
+                <a href="{{ path('admin_post_category_new', { type: 1}) }}">
+                    <i class="fa fa-circle-o"></i> {{ 'title.field.new'|trans }}</a>
+            </li>
+            <li {{ ( route == "admin_post_category_index" )  ? "class=active" : "" }}>
+                <a href="{{ path('admin_post_category_index', { type: 1}) }}">
+                    <i class="fa fa-circle-o"></i> {{ 'title.field.list'|trans }}</a>
+            </li>
         </ul>
     </li>
 
-    <li class="active treeview">
+    <li class="{{ ( route in postArr ) and type.code == 2  ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i> <span>{{ 'title.project.management'|trans|upper }}</span><i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-key"></i> <span>{{ 'title.project.management'|trans|upper }}</span><i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li class="active"><a href="{{ path('admin_post_category_new', { type: 2}) }}"><i class="fa fa-circle-o"></i> {{ 'title.project.new'|trans }}</a></li>
-            <li><a href="{{ path('admin_post_category_index', { type: 2}) }}"><i class="fa fa-circle-o"></i> {{ 'title.project.list'|trans }}</a></li>
+            <li {{ ( route == "admin_post_category_new" ) and type.code == 2 ? "class=active" : "" }}>
+                <a href="{{ path('admin_post_category_new', { type: 2}) }}">
+                    <i class="fa fa-circle-o"></i> {{ 'title.project.new'|trans }}</a>
+            </li>
+            <li {{ ( route == "admin_post_category_index" ) and type.code == 2  ? "class=active" : "" }}>
+                <a href="{{ path('admin_post_category_index', { type: 2}) }}">
+                    <i class="fa fa-circle-o"></i> {{ 'title.project.list'|trans }}</a>
+            </li>
         </ul>
     </li>
 
-    <li class="active treeview">
+    <li class="{{ ( route in postArr ) and type.code == 3  ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i>
+            <i class="fa fa-newspaper-o"></i>
             <span>{{ 'title.news.management'|trans|upper }}</span>
             <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li class="active">
+            <li {{ ( route == "admin_post_category_new" ) and type.code == 3 ? "class=active" : "" }}>
                 <a href="{{ path('admin_post_category_new',{ type: 3 }) }}">
                     <i class="fa fa-circle-o"></i> {{ 'title.news.new'|trans }}
                 </a>
             </li>
-            <li>
+            <li {{ ( route == "admin_post_category_index" ) and type.code == 3 ? "class=active" : "" }}>
                 <a href="{{ path('admin_post_category_index', {type:3}) }}">
                     <i class="fa fa-circle-o"></i>
                     {{ 'title.news.list'|trans }}
-                </a></li>
+                </a>
+            </li>
         </ul>
     </li>
-    <li class="active treeview">
+    <li class="{{ ( route in postArr ) and type.code == 4  ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i>
+            <i class="fa fa-laptop"></i>
             <span>{{ 'title.recruit.management'|trans|upper }}</span>
             <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li class="active">
+            <li {{ ( route == "admin_post_category_new" ) and type.code == 4 ? "class=active" : "" }}>
                 <a href="{{ path('admin_post_category_new',{ type: 4 }) }}">
                     <i class="fa fa-circle-o"></i> {{ 'title.recruit.new'|trans }}
                 </a>
             </li>
-            <li>
+            <li {{ ( route == "admin_post_category_index" ) and type.code == 4 ? "class=active" : "" }}>
                 <a href="{{ path('admin_post_category_index', {type: 4}) }}">
                     <i class="fa fa-circle-o"></i>
                     {{ 'title.recruit.list'|trans }}
                 </a></li>
         </ul>
     </li>
-    <li class="active treeview">
+    {% set userArr =  ['admin_user_index','admin_user_show','admin_user_edit', 'admin_user_new']%}
+    <li class="{{ ( route in userArr )  ? "active" : "" }} treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i>
+            <i class="fa fa-users"></i>
             <span>{{ 'title.user.management'|trans|upper }}</span>
             <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li class="active">
+            <li {{ ( route == "admin_user_new" ) ? "class=active" : "" }}>
                 <a href="{{ path('admin_user_new') }}">
                     <i class="fa fa-circle-o"></i> {{ 'title.user.new'|trans }}
                 </a>
             </li>
-            <li>
+            <li {{ ( route == "admin_user_index" ) ? "class=active" : "" }}>
                 <a href="{{ path('admin_user_index') }}">
                     <i class="fa fa-circle-o"></i>
                     {{ 'title.user.list'|trans }}
-                </a></li>
+                </a>
+            </li>
         </ul>
     </li>
 </ul>

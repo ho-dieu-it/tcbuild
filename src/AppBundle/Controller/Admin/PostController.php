@@ -58,9 +58,26 @@ class PostController extends BaseController
      * @Route("/", name="admin_index")
      * @Route("/{type}/category", name="admin_post_category_index")
      * @Method("GET")
+     *
+     * @param $type
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($type)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $typeObj = CF::getType($type);
+        $parent = array(
+            'title' => $typeObj['name'].'.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_post_index', array('type'=>$type))
+        );
+        $children = array(
+            'title' => $typeObj['name'].'.new',
+            'url' => ''
+        );
 
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('AppBundle:PostCategory')->findByType($type);
@@ -69,6 +86,7 @@ class PostController extends BaseController
             array(
                 'categories' => $categories,
                 'user' => $this->getUser(),
+                'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
                 'type' => CF::getType($type)
             ));
     }
@@ -79,6 +97,18 @@ class PostController extends BaseController
      */
     public function postListAction(PostCategory $category)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.category.management',
+            'url' => $this->container->get('router')->generate('admin_post_category_index', array('type'=>$type))
+        );
+        $children = array(
+            'title' => 'title.category.list',
+            'url' => ''
+        );
 
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Post');
@@ -101,6 +131,7 @@ class PostController extends BaseController
                 'posts' => $posts,
                 'category' => $category,
                 'type' => CF::getType($category->getType()),
+                'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
                 'user' => $this->getUser()
             ));
     }
@@ -114,9 +145,28 @@ class PostController extends BaseController
      * NOTE: the Method annotation is optional, but it's a recommended practice
      * to constraint the HTTP methods each controller responds to (by default
      * it responds to all methods).
+     *
+     * @param Request $request
+     * @param $type
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newPostCategoryAction(Request $request, $type)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $type = CF::getType($type);
+        $parent = array(
+            'title' => $type['name'].'.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_post_index', array('type'=>$type))
+        );
+        $children = array(
+            'title' => $type['name'].'.new',
+            'url' => ''
+        );
+
         $em = $this->getDoctrine()->getManager();
 
         $category = new PostCategory();
@@ -150,7 +200,8 @@ class PostController extends BaseController
         return $this->render('admin/post/category/new.html.twig', array(
             'category' => $category,
             'form' => $form->createView(),
-            'type' => CF::getType($type),
+            'type' => $type,
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }
@@ -165,9 +216,27 @@ class PostController extends BaseController
      * NOTE: the Method annotation is optional, but it's a recommended practice
      * to constraint the HTTP methods each controller responds to (by default
      * it responds to all methods).
+     *
+     * @param PostCategory $category
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newPostAction(PostCategory $category,Request $request)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.category.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_post_index', array('type'=>$category->getType()))
+        );
+        $children = array(
+            'title' => 'title.category.list',
+            'url' => ''
+        );
+
         $post = new Post();
         $post->setAuthorEmail($this->getUser()->getEmail());
         $form = $this->createForm(new PostType(), $post);
@@ -209,6 +278,7 @@ class PostController extends BaseController
             'category' => $category,
             'type' => CF::getType($category->getType()),
             'form' => $form->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser(),
         ));
     }
@@ -218,9 +288,26 @@ class PostController extends BaseController
      *
      * @Route("/category/show/{id}", requirements={"id" = "\d+"}, name="admin_post_category_show")
      * @Method("GET")
+     *
+     * @param PostCategory $category
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showPostCategoryAction(PostCategory $category)
     {
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.category.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_post_category_index', array('type'=>$category->getType()))
+        );
+        $children = array(
+            'title' => 'title.category.list',
+            'url' => ''
+        );
+
         // This security check can also be performed:
         //   1. Using an annotation: @Security("post.isAuthor(user)")
         //   2. Using a "voter" (see http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
@@ -233,6 +320,7 @@ class PostController extends BaseController
         return $this->render('admin/post/category/show.html.twig', array(
             'category' => $category,
             'delete_form' => $deleteForm->createView(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
             'user' => $this->getUser()
         ));
     }
@@ -270,9 +358,7 @@ class PostController extends BaseController
      */
     public function editPostAction(Post $post, Request $request)
     {
-//        if (null === $this->getUser() || !$page->isAuthor($this->getUser())) {
-//            throw $this->createAccessDeniedException('Posts can only be edited by their authors.');
-//        }
+   
         $post->setAuthorEmail($this->getUser()->getEmail());
         $post->setPublishedAt(new \DateTime());
         $post->setSlug(Slugger::slugify($post->getTitle()));

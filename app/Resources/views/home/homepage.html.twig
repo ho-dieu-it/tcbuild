@@ -131,7 +131,7 @@
                         {% for customer in customers %}
                             {% set image = customer.logo %}
                             <div class="partner-item">
-                                <a href="#">
+                                <a href="http://{{ customer.website }}" target="_blank">
                                     <img src="{{ asset('uploads/customers/')}}{{ image }}" alt="" class="img-responsive" />
                                 </a>
                             </div>
