@@ -61,7 +61,7 @@ class Post
      * @ORM\OrderBy({"createdAt"="DESC"})
      *
      */
-    private  $files;
+    private $files;
 
     /**
      * @var ArrayCollection
@@ -209,17 +209,22 @@ class Post
     {
         return $this->post_category;
     }
+
     public function setPostCategory(PostCategory $post_category = null)
     {
         $this->post_category = $post_category;
     }
 
-    public function getFiles() {
+    public function getFiles()
+    {
         return $this->files;
     }
-    public function setFiles(array $files) {
+
+    public function setFiles(array $files)
+    {
         $this->files = $files;
     }
+
     /**
      * @return ArrayCollection
      */
@@ -227,6 +232,7 @@ class Post
     {
         return $this->uploadedFiles;
     }
+
     /**
      * @param ArrayCollection $uploadedFiles
      */
@@ -234,6 +240,7 @@ class Post
     {
         $this->uploadedFiles = $uploadedFiles;
     }
+
     /**
      * @ORM\PreFlush()
      *
@@ -257,7 +264,7 @@ class Post
                     $file->setName($uploadedFile->getClientOriginalName());
                     $file->setType($uploadedFile->guessClientExtension());
                     $file->setSize($uploadedFile->getClientsize());
-                    $uploadedFile->move('/home/tamcongb/domains', $path);
+                    $uploadedFile->move($uploadDir, $path);
 
                     $this->getFiles()->add($file);
                     $file->setPost($this);
@@ -265,9 +272,7 @@ class Post
                 }
             }
             return true;
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return false;
         }
     }

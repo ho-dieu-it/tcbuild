@@ -94,9 +94,13 @@ class PostController extends BaseController
     /**     
      * @Route("/{id}/list", name="admin_post_list")
      * @Method("GET")
+     *
+     * @param PostCategory $category
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function postListAction(PostCategory $category)
     {
+        $type = 1;
         $root = array(
             'title' => 'title.home',
             'url' => $this->container->get('router')->generate('admin_menu_index')
@@ -342,11 +346,27 @@ class PostController extends BaseController
 
         $deleteForm = $this->createPostDeleteForm($post);
         $category = $post->getPostCategory();
+
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.category.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_post_category_index', array('type'=>$category->getType()))
+        );
+        $children = array(
+            'title' => 'title.category.list',
+            'url' => ''
+        );
+
         return $this->render('admin/post/show.html.twig', array(
             'post'        => $post,
             'category'    => $category,
             'delete_form' => $deleteForm->createView(),
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
         ));
     }
 
@@ -355,10 +375,12 @@ class PostController extends BaseController
      *
      * @Route("/edit/{id}", requirements={"id" = "\d+"}, name="admin_post_edit")
      * @Method({"GET", "POST"})
+     * @param Post $post
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editPostAction(Post $post, Request $request)
     {
-   
         $post->setAuthorEmail($this->getUser()->getEmail());
         $post->setPublishedAt(new \DateTime());
         $post->setSlug(Slugger::slugify($post->getTitle()));
@@ -389,9 +411,22 @@ class PostController extends BaseController
                 $em->flush();
             }
 
-
             return $this->redirectToRoute('admin_post_list', array('id' =>$category->getId()));
         }
+
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.category.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_post_category_index', array('type'=>$category->getType()))
+        );
+        $children = array(
+            'title' => 'title.category.list',
+            'url' => ''
+        );
 
         return $this->render('admin/post/edit.html.twig', array(
             'post'        => $post,
@@ -400,6 +435,7 @@ class PostController extends BaseController
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'user' => $this->getUser(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
         ));
     }
 
