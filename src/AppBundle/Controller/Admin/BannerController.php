@@ -13,6 +13,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -253,12 +254,11 @@ class BannerController extends BaseController
     /**
      * Deletes a Post entity.
      *
-     * @Route("/delete/{id}", name="admin_banner_delete")
-     * @Method("DELETE")
+     * @Route("/banner/delete", name="admin_banner_delete")
+     * @Method({"POST"})
      * @@Security("banner.isAuthor(user)")
      *
      * @param Request $request
-     * @param Banner $banner
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * 
      * The Security annotation value is an expression (if it evaluates to false,
@@ -266,22 +266,42 @@ class BannerController extends BaseController
      * The isAuthor() method is defined in the AppBundle\Entity\Banner entity.
      */
     
-    public function deleteAction(Request $request, Banner $banner)
+    public function deleteAction(Request $request)
     {
-        $form = $this->createDeleteForm( $banner );
-        $form->handleRequest($request);
+        $ids = $_POST['ids'];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $uploadPath = __DIR__ .ConstantBundle::UPLOAD_DIR.self::UPLOAD_FOLDER;
-            $uploadPath .= $banner->getImage();
-            if(file_exists( $uploadPath ))
-            {
-                unlink($uploadPath);
-            }
+        if ($request->isXMLHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove( $banner );
+            $repo = $em->getRepository('AppBundle:Banner');
+
+            $banners = $repo->findImages($ids);
+
+            $upload_path = __DIR__ .ConstantBundle::UPLOAD_DIR.self::UPLOAD_FOLDER;
+            foreach($banners as $banner)
+            {                
+                $image_path = $upload_path.$banner->getImage();
+                if(file_exists( $image_path ))
+                {
+                    unlink($image_path);
+                }
+            }
+
+            $repo->deleteRows($ids);
             $em->flush();
-        }
+            
+            return new JsonResponse(array('success' => TRUE));
+        }        
+//        else if ($form->isSubmitted() && $form->isValid()) {
+//            $uploadPath = __DIR__ .ConstantBundle::UPLOAD_DIR.self::UPLOAD_FOLDER;
+//            $uploadPath .= $banner->getImage();
+//            if(file_exists( $uploadPath ))
+//            {
+//                unlink($uploadPath);
+//            }
+//            $em = $this->getDoctrine()->getManager();
+//            $em->remove( $banner );
+//            $em->flush();
+//        }
 
         return $this->redirectToRoute( 'admin_banner_index' );
     }

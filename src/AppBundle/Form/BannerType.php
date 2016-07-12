@@ -40,18 +40,19 @@ class BannerType extends AbstractType
         //     $builder->add('title', null, array('required' => false, ...));
 
         $builder
-            ->add('title', null, array('label' => 'label.banner.title'))
-            ->add('description', 'textarea', array(
-                'attr' => array('rows' => 20),
-                'required' => false,
-                'label' => 'label.banner.description',
-            ))
             ->add('uploadedFile','file',array(
                 'label'=>'label.banner.uploadLogo',
                 'required' => false,
                 'multiple' => false,
                 'data_class' => null,
             ))
+            ->add('title', null, array('label' => 'label.banner.title'))
+            ->add('description', 'textarea', array(
+                'attr' => array('rows' => 20),
+                'required' => false,
+                'label' => 'label.banner.description',
+            ))
+
         ;
     }
 

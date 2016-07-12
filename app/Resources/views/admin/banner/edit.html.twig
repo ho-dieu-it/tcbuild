@@ -3,7 +3,7 @@
 {% block body_id 'admin_product_edit' %}
 
 {% block main %}
-    <h3>{{ 'title.banner.edit'|trans({'%id%': banner.id}) }}</h3>
+    {#<h3>{{ 'title.banner.edit'|trans({'%id%': banner.id}) }}</h3>#}
     {{ include('admin/banner/_form.html.twig', {
         form: edit_form,
         button_label: 'action.page.save'|trans,

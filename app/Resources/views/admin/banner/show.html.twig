@@ -23,20 +23,20 @@
     </a>
 {% endblock %}
 
-{% block sidebar %}
-    <div class="section">
-        <a href="{{ path('admin_banner_edit', { id: banner.id }) }}" class="btn btn-lg btn-block btn-success">
-            <i class="fa fa-edit"></i> {{ 'action.banner.edit'|trans }}
-        </a>
-    </div>
-        <div class="section">
-            {{ include('admin/banner/_form.html.twig', {
-                form: delete_form,
-                button_label: 'action.banner.delete'|trans,
-                button_css: 'btn btn-lg btn-block btn-danger',
-                include_back_to_home_link: false
-            }, with_context = false) }}
-        </div>
+{#{% block sidebar %}#}
+    {#<div class="section">#}
+        {#<a href="{{ path('admin_banner_edit', { id: banner.id }) }}" class="btn btn-lg btn-block btn-success">#}
+            {#<i class="fa fa-edit"></i> {{ 'action.banner.edit'|trans }}#}
+        {#</a>#}
+    {#</div>#}
+        {#<div class="section">#}
+            {#{{ include('admin/banner/_form.html.twig', {#}
+                {#form: delete_form,#}
+                {#button_label: 'action.banner.delete'|trans,#}
+                {#button_css: 'btn btn-lg btn-block btn-danger',#}
+                {#include_back_to_home_link: false#}
+            {#}, with_context = false) }}#}
+        {#</div>#}
 
 
-{% endblock %}
+{#{% endblock %}#}

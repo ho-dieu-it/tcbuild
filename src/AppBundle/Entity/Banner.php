@@ -8,7 +8,8 @@ use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerRepository")
+ *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BannerRepository")
  * @ORM\Table(name="Banners")
  */
 class Banner

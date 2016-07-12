@@ -3,63 +3,65 @@
 {% block body_id 'admin_post_index' %}
 
 {% block main %}
-    <div class="box">
-        <div class="box-header">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>{{ 'label.banner.title'|trans }}</th>
-                    <th>{{ 'label.banner.description'|trans }}</th>
-                    <th>{{ 'label.banner.createdAt'|trans }}</th>
-                    <th>{{ 'label.banner.uploadLogo'|trans }}</th>
-                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for banner in banners %}
-                    <tr>
-                        <td>{{ banner.title | md2html}}</td>
-                        <td>{{ banner.description | md2html }}</td>
-                        <td>{{ banner.createdAt|localizeddate('long', 'medium') }}</td>
-                        <td><img src="{{ asset('uploads/banners/') }}{{ banner.image }}" with="100px" height="100px"></td>
-                        <td>
-                            <div class="item-actions">
-                                <a href="{{ path('admin_banner_show', { id: banner.id }) }}" class="btn btn-sm btn-default">
-                                    {{ 'action.show'|trans }}
-                                </a>
+    <table id="example1 js_container" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th><input type="checkbox" name="check_all" class="js_check_all"></th>
+            <th>{{ 'label.banner.title'|trans }}</th>
+            <th>{{ 'label.banner.description'|trans }}</th>
+            <th>{{ 'label.banner.createdAt'|trans }}</th>
+            <th>{{ 'label.banner.uploadLogo'|trans }}</th>
+            <th><i class="fa fa-cogs"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for banner in banners %}
+            <tr>
+                <td><input type="checkbox" name="select" class="js_check_row" value="{{ banner.id }}"></td>
+                <td>{{ banner.title | md2html }}</td>
+                <td>{{ banner.description | md2html }}</td>
+                <td>{{ banner.createdAt|localizeddate('long', 'medium') }}</td>
+                <td><img src="{{ asset('uploads/banners/') }}{{ banner.image }}" with="100px" height="100px"></td>
+                <td>
+                    <div class="item-actions js_item-actions">
+                        <a href="{{ path('admin_banner_show', { id: banner.id }) }}" class="text-success">
+                            <i class="fa fa-eye"></i>
+                        </a>
 
-                                {#{% if banner.isAuthor(app.user) %}#}
-                                    <a href="{{ path('admin_banner_edit', { id: banner.id }) }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
-                                    </a>
-                                {#{% endif %}#}
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>{{ 'label.banner.title'|trans }}</th>
-                    <th>{{ 'label.banner.description'|trans }}</th>
-                    <th>{{ 'label.banner.createdAt'|trans }}</th>
-                    <th>{{ 'label.banner.uploadLogo'|trans }}</th>
-                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
-                </tr>
-                </tfoot>
-            </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
+                        {#{% if banner.isAuthor(app.user) %}#}
+                        <a href="{{ path('admin_banner_edit', { id: banner.id }) }}" class="text-blue">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        {#{% endif %}#}
+                        <a href="{{ path('admin_banner_delete', { id: banner.id }) }}" data-id="{{ banner.id }}" class="text-danger js_delete-row">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        {#<tfoot>#}
+        {#<tr>#}
+        {#<th>{{ 'label.banner.title'|trans }}</th>#}
+        {#<th>{{ 'label.banner.description'|trans }}</th>#}
+        {#<th>{{ 'label.banner.createdAt'|trans }}</th>#}
+        {#<th>{{ 'label.banner.uploadLogo'|trans }}</th>#}
+        {#<th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>#}
+        {#</tr>#}
+        {#</tfoot>#}
+    </table>
 {% endblock %}
 
 {% block sidebar %}
-    <div class="section actions">
-        <a href="{{ path('admin_banner_new') }}" class="btn btn-lg btn-block btn-success">
-            <i class="fa fa-plus"></i> {{ 'action.banner.create'|trans }}
-        </a>
-    </div>
+    <a href="{{ path('admin_banner_new') }}" class="btn btn-success">
+        <i class="fa fa-plus"></i> {{ 'action.banner.create'|trans }}
+    </a>
+    <a href="{{ path('admin_banner_new') }}" class="btn btn-danger js_delete_all">
+        <i class="fa fa-trash"></i> {{ 'action.banner.delete'|trans }}
+    </a>
 
- {#   {{ parent() }}
+    {#   {{ parent() }}
 
-    {{ show_source_code(_self) }}#}
+       {{ show_source_code(_self) }}#}
 {% endblock %}

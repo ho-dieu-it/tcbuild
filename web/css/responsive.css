@@ -1,4 +1,7 @@
 @media (max-width: 1200px) {
+  .wrapper{
+    width: 1170px;
+  }
   .header-content .header-right .sale-policy {
     padding-left: 0;
   }
@@ -14,6 +17,9 @@
   }
 }
 @media (max-width: 991px) {
+  .wrapper{
+    width: 900px;
+  }
   .navigation-menu {
     float: left;
   }
