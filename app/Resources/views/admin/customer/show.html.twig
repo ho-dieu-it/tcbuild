@@ -29,20 +29,20 @@
     </a>
 {% endblock %}
 
-{% block sidebar %}
-    <div class="section">
-        <a href="{{ path('admin_customer_edit', { id: customer.id }) }}" class="btn btn-lg btn-block btn-success">
-            <i class="fa fa-edit"></i> {{ 'action.customer.edit'|trans }}
-        </a>
-    </div>
-        <div class="section">
-            {{ include('admin/customer/_form.html.twig', {
-                form: delete_form,
-                button_label: 'action.customer.delete'|trans,
-                button_css: 'btn btn-lg btn-block btn-danger',
-                include_back_to_home_link: false
-            }, with_context = false) }}
-        </div>
+{#{% block sidebar %}#}
+    {#<div class="section">#}
+        {#<a href="{{ path('admin_customer_edit', { id: customer.id }) }}" class="btn btn-lg btn-block btn-success">#}
+            {#<i class="fa fa-edit"></i> {{ 'action.customer.edit'|trans }}#}
+        {#</a>#}
+    {#</div>#}
+        {#<div class="section">#}
+            {#{{ include('admin/customer/_form.html.twig', {#}
+                {#form: delete_form,#}
+                {#button_label: 'action.customer.delete'|trans,#}
+                {#button_css: 'btn btn-lg btn-block btn-danger',#}
+                {#include_back_to_home_link: false#}
+            {#}, with_context = false) }}#}
+        {#</div>#}
 
 
-{% endblock %}
+{#{% endblock %}#}

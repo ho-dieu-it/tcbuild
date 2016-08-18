@@ -85,7 +85,7 @@ class BannerController extends BaseController
     /**
      * Creates a new Page entity.
      *
-     * @Route("/new", name="admin_banner_new")
+     * @Route("/banner/new", name="admin_banner_new")
      * @Method({"GET", "POST"})
      * NOTE: the Method annotation is optional, but it's a recommended practice
      * to constraint the HTTP methods each controller responds to (by default

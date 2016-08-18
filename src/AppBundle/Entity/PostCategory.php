@@ -7,16 +7,13 @@
  */
 // src/AppBundle/Entity/Category.php
 namespace AppBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="post_categories")
- * use repository for handy tree functions
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
+ * @ORM\Table(name="post_categories") *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PostCategoryRepository")
  */
 class PostCategory
 {
@@ -34,41 +31,6 @@ class PostCategory
      * @ORM\OneToMany(targetEntity="Post", mappedBy="post_category", cascade={"remove"})
      */
     protected $posts;
-    /**
-     * @Gedmo\TreeLeft
-     * @ORM\Column(name="lft", type="integer")
-     */
-    private $lft;
-
-    /**
-     * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer")
-     */
-    private $lvl;
-
-    /**
-     * @Gedmo\TreeRight
-     * @ORM\Column(name="rgt", type="integer")
-     */
-    private $rgt;
-
-    /**
-     * @Gedmo\TreeRoot
-     * @ORM\Column(name="root", type="integer", nullable=true)
-     */
-    private $root;
-
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="PostCategory", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="PostCategory", mappedBy="parent")
-     */
-    private $children;
 
     /**
      * @ORM\Column(type="string")
@@ -96,11 +58,7 @@ class PostCategory
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-
-        $this->products = new ArrayCollection();
-
-        $this->children = new ArrayCollection();
-       // $this->child_categories = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
     /**
      * Get id
@@ -115,7 +73,7 @@ class PostCategory
      * Set name
      *
      * @param string $name
-     * @return Category
+     * @return PostCategory
      */
     public function setName($name)
     {
@@ -123,19 +81,12 @@ class PostCategory
 
         return $this;
     }
-    public function setParent(Category $parent = null)
-    {
-        $this->parent = $parent;
-    }
 
-    public function getParent()
+    public function setSlug($slug)
     {
-        return $this->parent;
-    }
+        $this->slug = $slug;
 
-    public function getChildren()
-    {
-        return $this->children;
+        return $this;
     }
 
     /**
@@ -219,15 +170,6 @@ class PostCategory
         return $this->slug;
     }
 
-    public function getLvl()
-    {
-        return $this->lvl;
-    }
-
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-    }
     public function getType()
     {        
         return $this->type;
@@ -238,25 +180,25 @@ class PostCategory
         $this->type = $type;
     }
 
-    public function addProduct(Product $product)
+    public function addPost(Post $post)
     {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
         }
 
         return $this;
     }
 
-    public function removeJob(Product $product)
+    public function removeJob(Post $post)
     {
-        if ($this->products->contains($product)) {
-            $this->products->removeElement($product);
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
         }
 
         return $this;
     }
-    public function __toString()
-    {
-        return $this->getName();
-    }
+//    public function __toString()
+//    {
+//        return $this->getName();
+//    }
 }

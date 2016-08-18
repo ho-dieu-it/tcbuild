@@ -40,25 +40,30 @@ class CustomerType extends AbstractType
         //     $builder->add('title', null, array('required' => false, ...));
 
         $builder
-            ->add('name', null, array('label' => 'label.customer.name'))
+            ->add('name', null, array('label' => 'label.customer.name','required' => true))
             ->add('address', 'text', array(
-                'label' => 'label.customer.address'
+                'label' => 'label.customer.address',
+                'required' => false,
             ))
             ->add('phone', 'text', array(
-                'label' => 'label.customer.phone'
+                'label' => 'label.customer.phone',
+                'required' => false,
             ))
             ->add('fax', 'text', array(
-                'label' => 'label.customer.fax'
+                'label' => 'label.customer.fax',
+                'required' => false,
             ))
             ->add('email', 'text', array(
-                'label' => 'label.customer.email'
+                'label' => 'label.customer.email',
+                'required' => false,
             ))
             ->add('website', 'text', array(
-                'label' => 'label.customer.website'
+                'label' => 'label.customer.website',
+                'required' => false,
             ))
             ->add('uploadedFile','file',array(
                 'label'=>'label.customer.uploadLogo',
-                'required' => false,
+                'required' => true,
                 'multiple' => false,
                 'data_class' => null,
             ))

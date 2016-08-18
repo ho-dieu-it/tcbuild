@@ -3,11 +3,10 @@
 {% block body_id 'admin_post_index' %}
 
 {% block main %}
-    <div class="box">
-        <div class="box-header">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th><input type="checkbox" name="check_all"></th>
                     <th>{{ 'label.customer.name'|trans }}</th>
                     <th>{{ 'label.customer.address'|trans }}</th>
                     <th>{{ 'label.customer.email'|trans }}</th>
@@ -21,6 +20,7 @@
                 <tbody>
                 {% for customer in customers %}
                     <tr>
+                        <td><input type="checkbox" name="select"></td>
                         <td>{{ customer.name }}</td>
                         <td>{{ customer.address }}</td>
                         <td>{{ customer.email }}</td>
@@ -44,27 +44,28 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-                <tfoot>
-                <tr>
-                    <th>{{ 'label.customer.name'|trans }}</th>
-                    <th>{{ 'label.customer.address'|trans }}</th>
-                    <th>{{ 'label.customer.email'|trans }}</th>
-                    <th>{{ 'label.customer.phone'|trans }}</th>
-                    <th>{{ 'label.customer.website'|trans }}</th>
-                    <th>{{ 'label.customer.createdAt'|trans }}</th>
-                    <th>{{ 'label.customer.uploadLogo'|trans }}</th>
-                    <th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>
-                </tr>
-                </tfoot>
+                {#<tfoot>#}
+                {#<tr>#}
+                    {#<th>{{ 'label.customer.name'|trans }}</th>#}
+                    {#<th>{{ 'label.customer.address'|trans }}</th>#}
+                    {#<th>{{ 'label.customer.email'|trans }}</th>#}
+                    {#<th>{{ 'label.customer.phone'|trans }}</th>#}
+                    {#<th>{{ 'label.customer.website'|trans }}</th>#}
+                    {#<th>{{ 'label.customer.createdAt'|trans }}</th>#}
+                    {#<th>{{ 'label.customer.uploadLogo'|trans }}</th>#}
+                    {#<th><i class="fa fa-cogs"> {{ 'label.actions'|trans }}</th>#}
+                {#</tr>#}
+                {#</tfoot>#}
             </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
 {% endblock %}
 
 {% block sidebar %}
     <div class="section actions">
-        <a href="{{ path('admin_customer_new') }}" class="btn btn-lg btn-block btn-success">
+        <a href="{{ path('admin_customer_new') }}" class="btn btn-success">
             <i class="fa fa-plus"></i> {{ 'action.customer.create'|trans }}
+        </a>
+        <a href="" class="btn btn-danger">
+            <i class="fa fa-trash"></i> {{ 'action.customer.delete'|trans }}
         </a>
     </div>
 

@@ -11,5 +11,6 @@ namespace AppBundle\Utils;
 
 class ConstantBundle
 {
-    const UPLOAD_DIR = '/../../../../../public_html/uploads';
+    //const UPLOAD_DIR = '/../../../../../public_html/uploads';
+    const UPLOAD_DIR = '/../../../../web/uploads';
 }

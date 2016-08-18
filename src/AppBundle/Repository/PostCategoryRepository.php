@@ -1,9 +1,9 @@
 <?php
 namespace AppBundle\Repository;
 
-use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Doctrine\ORM\EntityRepository;
 
-class PostCategoryRepository extends NestedTreeRepository
+class PostCategoryRepository extends EntityRepository
 {
     public function findByType($type)
     {

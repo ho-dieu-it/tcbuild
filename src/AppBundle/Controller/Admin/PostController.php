@@ -44,6 +44,7 @@ use AppBundle\Utils\Slugger;
 class PostController extends BaseController
 {
     const TYPE = 1;// 1 : news
+    CONST UPLOAD_FOLDER = '/posts/';
     /**
      * Lists all Post entities.
      *
@@ -184,21 +185,14 @@ class PostController extends BaseController
         // However, we explicitly add it to improve code readability.
         // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
         if ($form->isSubmitted() && $form->isValid()) {
-            //var_dump('newAction',$request->request->get('app_category')['parent'][0]);exit;
-            $app_category = $request->request->get('app_category');
-            if( $app_category['parent'] ){
-                $parent_id = ($request->request->get('app_category'));
-                $repo = $em->getRepository('AppBundle:PostCategory');
-                $parent = $repo->findOneById($parent_id['parent']);
-                $category->setParent($parent);
-                $em->persist($parent);
-            }
+
             $category->setAuthorEmail($this->getUser()->getEmail());
-            $category->setType($type);
+            $category->setType($type['code']);
+            $category->setSlug(Slugger::slugify($category->getName()));
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('admin_post_category_index', array('type'=> $type));
+            return $this->redirectToRoute('admin_post_category_index', array('type'=> $category->getType()));
         }
 
         return $this->render('admin/post/category/new.html.twig', array(
@@ -257,12 +251,10 @@ class PostController extends BaseController
             $post->setPostCategory($category);
             $post->setSlug(Slugger::slugify($post->getTitle()));
 
-            $folder = '/posts';
-
             // Create Image
             if($post->getFiles()) {
 
-                $temp_path = __DIR__ .ConstantBundle::UPLOAD_DIR. $folder;
+                $temp_path = __DIR__ .ConstantBundle::UPLOAD_DIR.self::UPLOAD_FOLDER;
 
                 $isUploaded = $post->upload($temp_path);
             }
@@ -497,6 +489,10 @@ class PostController extends BaseController
      *
      * @Route("/category/edit/{id}", requirements={"id" = "\d+"}, name="admin_post_category_edit")
      * @Method({"GET", "POST"})
+     *
+     * @param PostCategory $category
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editPostCategoryAction(PostCategory $category, Request $request)
     {
@@ -518,12 +514,27 @@ class PostController extends BaseController
             return $this->redirectToRoute('admin_post_category_edit', array('id' => $category->getId()));
         }
 
+        $root = array(
+            'title' => 'title.home',
+            'url' => $this->container->get('router')->generate('admin_menu_index')
+        );
+        $parent = array(
+            'title' => 'title.category.management',
+            'url' => $this->container->get('router')
+                ->generate('admin_post_category_index', array('type'=>$category->getType()))
+        );
+        $children = array(
+            'title' => 'title.category.list',
+            'url' => ''
+        );
+
         return $this->render('admin/post/category/edit.html.twig', array(
             'category'        => $category,
             'type'        => CF::getType($category->getType()),
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'user' => $this->getUser(),
+            'breadCrumb' => $this->getBreadCrumb($root, $parent, $children),
         ));
     }
 
